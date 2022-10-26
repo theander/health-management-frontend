@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './Medical.style';
 
 export const Medical: React.FC = () => {
   return (
