@@ -18,20 +18,21 @@ export const Login: React.FC = () => {
   const submitLogin = (event: any) => {
     event.preventDefault();
     setLoading(true);
-    //setUser({username:event.target?.username,password:event.target?.password});
 
-    const resp = login(user.username, user.password)
+    login(user.username, user.password)
       .then(user => {
         localStorage.setItem('access_token', user.access_token);
         localStorage.setItem('refresh_token', user.refresh_token);
+        navigate('/home');
       })
       .catch(err => {
         console.log('Erro:', err.message);
+        navigate('/erro');
       });
 
+    setLoading(false);
     setTimeout(() => {
       localStorage.setItem('token', 'token');
-      setLoading(false);
     }, 2000);
   };
 
@@ -40,7 +41,6 @@ export const Login: React.FC = () => {
     setUser(previousValue => {
       return { ...previousValue, [name]: value };
     });
-    console.log('User: ', user);
   };
 
   return (

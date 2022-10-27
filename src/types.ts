@@ -3,6 +3,6 @@ export type User = IUser;
 interface IUser {
   username: string;
   password: string;
-  accessToken: string;
-  refreshToken: string;
+  access_token: string;
+  refresh_token: string;
 }

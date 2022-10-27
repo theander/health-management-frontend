@@ -8,6 +8,7 @@ import { Login } from './components/login/Login';
 import { User } from './components/user/User';
 import { Labs } from './components/labs/Labs';
 import { Medical } from './components/medical/Medical';
+import { Error } from './components/error/Error';
 
 export const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ export const App: React.FC = () => {
         <Route path="user" element={<User />} />
         <Route path="labs" element={<Labs />} />
         <Route path="medical" element={<Medical />} />
+        <Route path="erro" element={<Error />} />
       </Routes>
     </BrowserRouter>
   );

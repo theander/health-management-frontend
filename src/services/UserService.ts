@@ -1,15 +1,12 @@
-import authInstance from '../api/userInstance';
-import { AxiosResponse } from 'axios';
+import { authInstance } from '../api/userInstance';
+import { User } from '../types';
 
 export async function getUsers() {
   const resp = await authInstance.get('/api/users');
   return resp.data;
 }
 
-export async function login(
-  username: string,
-  password: string
-): Promise<AxiosResponse> {
+export async function login(username: string, password: string): Promise<User> {
   const form = new FormData();
   form.append('username', username);
   form.append('password', password);
@@ -19,7 +16,7 @@ export async function login(
     url: '/api/login',
     data: form
   });
-  return await resp;
+  return await resp.data;
 }
 
 export async function refreshToken() {}
