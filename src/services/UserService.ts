@@ -14,7 +14,7 @@ export async function login(username: string, password: string): Promise<User> {
   const resp = await authInstance({
     method: 'post',
     url: '/api/login',
-    data: form
+    data: form,
   });
   return await resp.data;
 }

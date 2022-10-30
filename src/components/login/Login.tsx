@@ -10,7 +10,7 @@ export const Login: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading && localStorage.getItem('token') !== null) {
+    if (!loading && localStorage.getItem('access_token') !== null) {
       navigate('/home');
     }
   }, [loading, navigate]);
@@ -20,12 +20,12 @@ export const Login: React.FC = () => {
     setLoading(true);
 
     login(user.username, user.password)
-      .then(user => {
+      .then((user) => {
         localStorage.setItem('access_token', user.access_token);
         localStorage.setItem('refresh_token', user.refresh_token);
         navigate('/home');
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('Erro:', err.message);
         navigate('/erro');
       });
@@ -38,7 +38,7 @@ export const Login: React.FC = () => {
 
   const handleFormField = (e: any) => {
     const { name, value } = e.target;
-    setUser(previousValue => {
+    setUser((previousValue) => {
       return { ...previousValue, [name]: value };
     });
   };
@@ -46,9 +46,9 @@ export const Login: React.FC = () => {
   return (
     <form onSubmit={submitLogin}>
       <label>Usuário</label>
-      <input type="text" onChange={handleFormField} name="username" />
+      <input type='text' onChange={handleFormField} name='username' />
       <label>Senha</label>
-      <input type="password" onChange={handleFormField} name="password" />
+      <input type='password' onChange={handleFormField} name='password' />
       <div>
         {loading && <div></div>}
         <button>Entrar</button>

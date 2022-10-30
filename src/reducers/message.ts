@@ -2,7 +2,7 @@ import { SET_MESSAGE, CLEAR_MESSAGE } from '../actions/types';
 
 const initialState = {};
 
-export default function(
+export default function (
   state = initialState,
   action: { type: any; payload: any }
 ) {
