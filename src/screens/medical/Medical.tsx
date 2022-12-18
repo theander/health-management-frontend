@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Medical.style';
 import UserTable from './components/UserTable';
 import { ReceitaForm } from './components/ReceitaForm';
 
