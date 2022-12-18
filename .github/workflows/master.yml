@@ -23,5 +23,5 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          load: true
+          push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/clockbox:latest
