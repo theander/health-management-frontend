@@ -25,4 +25,4 @@ jobs:
           file: ./Dockerfile
           push: true
           #          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/health-management-frontend:latest
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{GIT_BRANCH}}:${{GIT_SHA:0:7}}
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/health-management-frontend:${{ github.run_number }}
