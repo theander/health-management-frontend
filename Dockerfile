@@ -10,9 +10,7 @@ ENV SKIP_PREFLIGHT_CHECK=true
 # install app dependencies
 COPY package.json package-lock.json ./
 
-RUN npm install -g npm@9.2.0
-
-RUN npm install --silent
+RUN npm install -g npm@9.2.0 && npm install --silent
 
 # add app
 COPY . ./
