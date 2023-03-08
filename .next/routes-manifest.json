@@ -1,0 +1,132 @@
+{
+  "version": 3,
+  "pages404": true,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "dynamicRoutes": [
+    {
+      "page": "/admin/[id]/delete",
+      "regex": "^/admin/([^/]+?)/delete(?:/)?$",
+      "routeKeys": { "id": "id" },
+      "namedRegex": "^/admin/(?<id>[^/]+?)/delete(?:/)?$"
+    },
+    {
+      "page": "/admin/[id]/update",
+      "regex": "^/admin/([^/]+?)/update(?:/)?$",
+      "routeKeys": { "id": "id" },
+      "namedRegex": "^/admin/(?<id>[^/]+?)/update(?:/)?$"
+    },
+    {
+      "page": "/api/auth/[...nextauth]",
+      "regex": "^/api/auth/(.+?)(?:/)?$",
+      "routeKeys": { "nextauth": "nextauth" },
+      "namedRegex": "^/api/auth/(?<nextauth>.+?)(?:/)?$"
+    },
+    {
+      "page": "/labs/[id]/delete",
+      "regex": "^/labs/([^/]+?)/delete(?:/)?$",
+      "routeKeys": { "id": "id" },
+      "namedRegex": "^/labs/(?<id>[^/]+?)/delete(?:/)?$"
+    },
+    {
+      "page": "/labs/[id]/update",
+      "regex": "^/labs/([^/]+?)/update(?:/)?$",
+      "routeKeys": { "id": "id" },
+      "namedRegex": "^/labs/(?<id>[^/]+?)/update(?:/)?$"
+    },
+    {
+      "page": "/medical/[id]/delete",
+      "regex": "^/medical/([^/]+?)/delete(?:/)?$",
+      "routeKeys": { "id": "id" },
+      "namedRegex": "^/medical/(?<id>[^/]+?)/delete(?:/)?$"
+    },
+    {
+      "page": "/medical/[id]/update",
+      "regex": "^/medical/([^/]+?)/update(?:/)?$",
+      "routeKeys": { "id": "id" },
+      "namedRegex": "^/medical/(?<id>[^/]+?)/update(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/404",
+      "regex": "^/404(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/404(?:/)?$"
+    },
+    {
+      "page": "/admin",
+      "regex": "^/admin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin(?:/)?$"
+    },
+    {
+      "page": "/admin/create",
+      "regex": "^/admin/create(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/create(?:/)?$"
+    },
+    {
+      "page": "/home",
+      "regex": "^/home(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/home(?:/)?$"
+    },
+    {
+      "page": "/labs",
+      "regex": "^/labs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/labs(?:/)?$"
+    },
+    {
+      "page": "/labs/create",
+      "regex": "^/labs/create(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/labs/create(?:/)?$"
+    },
+    {
+      "page": "/login",
+      "regex": "^/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/login(?:/)?$"
+    },
+    {
+      "page": "/medical",
+      "regex": "^/medical(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/medical(?:/)?$"
+    },
+    {
+      "page": "/medical/create",
+      "regex": "^/medical/create(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/medical/create(?:/)?$"
+    }
+  ],
+  "dataRoutes": [
+    {
+      "page": "/admin",
+      "dataRouteRegex": "^/_next/data/_ZhKx8hsMtd0EUAU2MFq0/admin.json$"
+    }
+  ],
+  "rsc": {
+    "header": "RSC",
+    "varyHeader": "RSC, Next-Router-State-Tree, Next-Router-Prefetch"
+  },
+  "rewrites": []
+}
