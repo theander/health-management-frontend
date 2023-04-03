@@ -9,7 +9,6 @@ export default function Create() {
 
   async function handleCreate(event: any) {
     event.preventDefault();
-    console.log(event.target.role.value);
     const resp = await axios.post(CREATE_USER_URL, {
       name: event.target.name.value,
       password: event.target.password.value,
@@ -17,11 +16,11 @@ export default function Create() {
     });
 
     if (resp.status === 201) {
-      console.log(event.target.username.value);
-      console.log(event.target.role.value);
+      const username = event.target.username.value;
+      const rolename = event.target.role.value;
       const addRoleResp = await axios.post(ADD_ROLE_TO_USER_URL, {
-        username: event.target.username.value,
-        rolename: event.target.role.value,
+        username,
+        rolename,
       });
       if (addRoleResp.status === 200) {
         router.push('/admin');

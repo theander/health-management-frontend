@@ -39,7 +39,7 @@ export default function Home() {
               <p className='card-text'>
                 User é o serviço reponsável por cadastrar consultas
               </p>
-              <a href='/[...subpages]/user' className='btn btn-primary'>
+              <a href='/user' className='btn btn-primary'>
                 Ir para serviço user
               </a>
             </div>

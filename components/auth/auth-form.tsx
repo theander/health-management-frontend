@@ -1,11 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import type {
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-} from 'next';
-import { getCsrfToken } from 'next-auth/react';
 
 export default function AuthForm() {
   const route = useRouter();

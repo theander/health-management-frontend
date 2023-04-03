@@ -9,7 +9,7 @@ interface IExam {
 
 export default function Labs() {
   const { data: session, status } = useSession();
-  console.log(session, status);
+  console.log('Data Session:', session);
   return (
     <div>
       <nav>

@@ -1,4 +1,4 @@
-import UserTable from '../../../components/UserTable';
+import UserTable from '../../../components/user-table';
 import ReceitaForm from '../../../components/ReceitaForm';
 import Link from 'next/link';
 
