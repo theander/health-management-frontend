@@ -1,8 +1,6 @@
 import { useSession } from 'next-auth/react';
 import jwt_decode from 'jwt-decode';
 import { useRouter } from 'next/router';
-import { Session } from 'next-auth';
-import { useEffect } from 'react';
 
 export default function Consultar() {
   const route = useRouter();
@@ -65,6 +63,6 @@ export function getStaticPaths() {
     fallback: 'blocking',
   };
 }
-export function getStaticProps(context) {
+export function getStaticProps() {
   return { props: {} };
 }
