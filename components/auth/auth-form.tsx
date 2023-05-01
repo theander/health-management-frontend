@@ -6,7 +6,6 @@ export default function AuthForm() {
   const route = useRouter();
   async function submitLogin(event: any) {
     event.preventDefault();
-
     const enteredEmail = event.target.email.value;
     const enteredPassword = event.target.password.value;
 

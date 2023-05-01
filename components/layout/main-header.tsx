@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { router } from 'next/client';
 
 export default function MainHeader() {
   return (
@@ -28,8 +29,8 @@ export default function MainHeader() {
         </a>
 
         <nav className='d-inline-flex mt-2 mt-md-0 ms-md-auto'>
-          <a className='me-3 py-2 text-dark text-decoration-none' href='#'>
-            Features
+          <a className='me-3 py-2 text-dark text-decoration-none' href='/home'>
+            Home
           </a>
           <a className='me-3 py-2 text-dark text-decoration-none' href='#'>
             Enterprise
