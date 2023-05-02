@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { router } from 'next/client';
+import { signIn, signOut } from 'next-auth/react';
 
 export default function MainHeader() {
   return (
@@ -38,8 +39,14 @@ export default function MainHeader() {
           <a className='me-3 py-2 text-dark text-decoration-none' href='#'>
             Support
           </a>
-          <a className='py-2 text-dark text-decoration-none' href='#'>
-            Pricing
+          <a
+            className='py-2 text-dark text-decoration-none'
+            href='/home'
+            onClick={async () => {
+              await signOut();
+            }}
+          >
+            Logout
           </a>
         </nav>
       </div>

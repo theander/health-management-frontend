@@ -38,7 +38,7 @@ export default function AuthForm() {
             placeholder='name@example.com'
             name='email'
           />
-          <label htmlFor='floatingInput'>Email address</label>
+          <label htmlFor='floatingInput'>Username</label>
         </div>
         <div className='form-floating'>
           <input

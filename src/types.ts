@@ -10,3 +10,11 @@ export type CardPropsType = {
   redirectTo: string;
   redirectDescription: string;
 };
+
+export type Exam = {
+  id: number;
+  name: string;
+  description: string;
+  status: string;
+  username: number;
+};

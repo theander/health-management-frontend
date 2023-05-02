@@ -4,17 +4,6 @@ import React from 'react';
 export default function Consultar(props: any) {
   return (
     <div>
-      <nav>
-        <ul className='nav justify-content-center gap-3'>
-          <li className='nav-item'>
-            <button className='btn btn-outline-light' aria-current='page'>
-              <Link className='text-decoration-none' href='/admin/create'>
-                Add user
-              </Link>
-            </button>
-          </li>
-        </ul>
-      </nav>
       <div className='container'>
         <table className='table'>
           <thead>
