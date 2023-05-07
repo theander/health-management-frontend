@@ -83,13 +83,3 @@ export default function Consultar(props: any) {
     </form>
   );
 }
-
-// export function getStaticPaths() {
-//   return {
-//     paths: [],
-//     fallback: 'blocking',
-//   };
-// }
-// export function getStaticProps() {
-//   return { props: {} };
-// }

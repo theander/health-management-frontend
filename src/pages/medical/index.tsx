@@ -1,39 +1,37 @@
-import UserTable from '../../../components/user-table';
-import ReceitaForm from '../../../components/ReceitaForm';
-import Link from 'next/link';
-
 export default function Medical() {
   return (
-    <div>
-      <nav>
-        <ul className='nav justify-content-center gap-3'>
-          <li className='nav-item'>
-            <button className='btn btn-outline-light'>
-              <Link className='text-decoration-none' href='shopcart'>
-                Pacientes
-              </Link>
-            </button>
-          </li>
-          <li className='nav-item'>
-            <button className='btn btn-outline-light' aria-current='page'>
-              <Link className='text-decoration-none' href='shop'>
+    <div className='container'>
+      <div className='row'>
+        <div className='col-3'>
+          <div className='card'>
+            <div className='card-body'>
+              <h5 className='card-title'>Pacientes</h5>
+              <a href='/medical/consultas' className='btn btn-primary'>
+                Ir para pacientes
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className='col-3'>
+          <div className='card'>
+            <div className='card-body'>
+              <h5 className='card-title'>Receita</h5>
+              <a href='/medical/receitas' className='btn btn-primary'>
                 Gerar receita
-              </Link>
-            </button>
-          </li>
-
-          <li className='nav-item'>
-            <button className='btn btn-outline-light'>
-              <Link className='text-decoration-none' href='shopcart'>
-                Gerar exame
-              </Link>
-            </button>
-          </li>
-        </ul>
-      </nav>
-      <div>
-        <UserTable />
-        <ReceitaForm />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className='col-3'>
+          <div className='card'>
+            <div className='card-body'>
+              <h5 className='card-title'>Exames</h5>
+              <a href='/medical/exames' className='btn btn-primary'>
+                Ir para exames
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

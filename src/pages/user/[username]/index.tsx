@@ -1,15 +1,4 @@
-import { useRouter } from 'next/router';
-
-export default function User123() {
-  // const route = useRouter();
-
-  // @ts-ignore
-  // const id = route?.query?.['ids'][0];
-  //     ? route.query.ids[0]
-  //     : route.push('/invalid-user');
-
-  //fetch user by id
-
+export default function Username() {
   return (
     <div className='container'>
       <div className='row'>
