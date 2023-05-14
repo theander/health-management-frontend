@@ -1,4 +1,12 @@
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+
 export default function UserHome() {
+  const session = useSession();
+  const route = useRouter();
+  if (session.status === 'unauthenticated') {
+    route.push('/login');
+  }
   return (
     <div className='container'>
       <div className='row'>
@@ -8,7 +16,7 @@ export default function UserHome() {
               <h5 className='card-title'>Consulta</h5>
               <p className='card-text'>Marcar nova consulta</p>
               <a href='/user/consultar' className='btn btn-primary'>
-                Ir para serviço admin
+                Ir para serviço de consulta
               </a>
             </div>
           </div>

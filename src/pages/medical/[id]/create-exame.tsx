@@ -1,15 +1,10 @@
+import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import jwt_decode from 'jwt-decode';
-import { useRouter } from 'next/router';
-import { useRef } from 'react';
 import axios from 'axios';
+import { router } from 'next/client';
 
-export type RegistrarConsulta = {
-  nome: string;
-  medico: string;
-  data: string;
-};
-export default function Consultar(props: any) {
+export default function CreateExame() {
   const route = useRouter();
   const session = useSession();
   let user;
@@ -24,50 +19,48 @@ export default function Consultar(props: any) {
 
   async function handleSubmit(event: any) {
     event.preventDefault();
-    const resp = await axios.post('http://localhost:8280/api/consulta', {
+    console.log(
+      'Exame: ',
+      event.target.usernameField.value,
+      event.target.medicalField.value,
+      event.target.descriptionField.value,
+      'OPEN'
+    );
+    const resp = await axios.post('http://localhost:8380/api/lab', {
       username: event.target.usernameField.value,
-      medico: event.target.medicalField.value,
+      name: event.target.medicalField.value,
       description: event.target.descriptionField.value,
+      status: 'OPEN',
     });
-    if (resp.status === 201) {
-      await route.push('/user');
+    if (resp.status === 200) {
+      await route.push('/medical');
     }
   }
 
   return (
     <form onSubmit={handleSubmit} className='w-50 m-auto'>
-      <legend>Registrar consulta</legend>
+      <legend>Registrar exame</legend>
       <div className='mb-3'>
-        <label htmlFor='disabledTextInputUserName' className='form-label'>
-          Username
-        </label>
+        <input
+          type='text'
+          id='disabledTextInput'
+          className='form-control'
+          placeholder='nome do paciente'
+          value={route.query.id}
+          name='usernameField'
+        />
+      </div>
+      <div className='mb-3'>
         <input
           type='text'
           id='disabledTextInput'
           className='form-control'
           placeholder='Disabled input'
           value={user}
-          name='usernameField'
-        />
-      </div>
-
-      <div className='mb-3'>
-        <label htmlFor='disabledTextInputMedical' className='form-label'>
-          Prestador
-        </label>
-        <input
-          type='text'
-          id='disabledTextInput'
-          className='form-control'
-          placeholder='Disabled input'
-          value={medico}
           name='medicalField'
         />
       </div>
       <div className='mb-3'>
-        <label htmlFor='disabledTextInputData' className='form-label'>
-          Descrição
-        </label>
         <input
           type='text'
           id='disabledTextInput'

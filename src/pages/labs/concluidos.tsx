@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Exam } from '../../types';
+import Link from 'next/link';
 
 export default function Concluidos() {
   const [exams, setExams] = useState([] as Exam[]);
@@ -11,6 +12,17 @@ export default function Concluidos() {
   }, [0]);
   return (
     <div className='container'>
+      <nav>
+        <ul className='nav justify-content-center gap-3'>
+          <li className='nav-item'>
+            <button className='btn btn-outline-light' aria-current='page'>
+              <Link className='text-decoration-none' href='/labs'>
+                Voltar
+              </Link>
+            </button>
+          </li>
+        </ul>
+      </nav>
       <table className='table'>
         <thead>
           <tr>
