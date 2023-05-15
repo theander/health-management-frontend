@@ -36,16 +36,18 @@ export default function Exames() {
       <table className='table'>
         <thead>
           <tr>
-            <td>Username</td>
+            <td>Nome</td>
             <td>Médico</td>
+            <td>Status</td>
             <td>Descrição</td>
           </tr>
         </thead>
         <tbody>
           {labs.map((consulta: any) => (
             <tr key={consulta.id}>
+              <td>{consulta.name}</td>
               <td>{consulta.username}</td>
-              <td>{consulta.medico}</td>
+              <td>{consulta.status}</td>
               <td>{consulta.description}</td>
             </tr>
           ))}

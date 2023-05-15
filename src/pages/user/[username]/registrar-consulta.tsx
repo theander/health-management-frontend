@@ -4,7 +4,6 @@ import { useSession } from 'next-auth/react';
 
 export default function RegistrarConsulta(props: any) {
   const { data: session, status } = useSession();
-  console.log('Data Session:', session);
   return (
     <div>
       <nav></nav>
