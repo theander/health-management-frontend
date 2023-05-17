@@ -30,28 +30,32 @@ export default function Exams() {
   }, [user]);
   return (
     <div className='container'>
-      <table className='table'>
-        <thead>
-          <tr>
-            <td>Id</td>
-            <td> Nome</td>
-            <td> Descrição</td>
-            <td> Status</td>
-            <td> Username</td>
-          </tr>
-        </thead>
-        <tbody>
-          {exams.map((exam, index) => (
-            <tr key={index}>
-              <td>{exam.id} </td>
-              <td> {exam.name} </td>
-              <td> {exam.description} </td>
-              <td> {exam.status} </td>
-              <td> {exam.username} </td>
+      {exams.length > 0 ? (
+        <table className='table'>
+          <thead>
+            <tr>
+              <td>Id</td>
+              <td> Nome</td>
+              <td> Descrição</td>
+              <td> Status</td>
+              <td> Username</td>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {exams.map((exam, index) => (
+              <tr key={index}>
+                <td>{exam.id} </td>
+                <td> {exam.name} </td>
+                <td> {exam.description} </td>
+                <td> {exam.status} </td>
+                <td> {exam.username} </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <h2>Sem exames por enquanto</h2>
+      )}
     </div>
   );
 }

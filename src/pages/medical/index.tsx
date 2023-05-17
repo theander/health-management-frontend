@@ -100,6 +100,8 @@ export default function Medical() {
             ))}
           </tbody>
         </table>
+      ) : session.status === 'loading' ? (
+        <p>Loading</p>
       ) : (
         <h2>Sem Consultas por enquanto</h2>
       )}

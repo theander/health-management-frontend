@@ -2,23 +2,38 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { Exam, LabType } from '../../../types';
+import { useSession } from 'next-auth/react';
+import jwt_decode from 'jwt-decode';
 
 export default function Exames() {
-  const [labs, setLabs] = useState([]);
   const route = useRouter();
   const createExamRoute = `/medical/${route.query.id}/create-exame`;
 
-  async function getLab() {
+  async function getLab(name: string) {
     const resp = await axios.get(
-      ` http://localhost:8380/api/lab?status=OPEN&username=anderUser`
-      // ` http://localhost:8380/api/lab?status=OPEN&username=anderUser`
+      ` http://localhost:8380/api/lab?status=OPEN&name=${name}`
     );
-    return await resp.data;
+    return resp.data;
   }
 
+  const [labs, setLabs] = useState([] as LabType[]);
+  const session = useSession();
+
+  let user = '';
+
+  if (session.status === 'authenticated') {
+    const { accessToken } = { accessToken: '', ...session?.data };
+    let { sub: username } = jwt_decode(accessToken || '') as { sub: string };
+    user = username;
+  } else {
+    <p>Não autenticado</p>;
+  }
   useEffect(() => {
-    getLab().then((resp) => setLabs(resp));
-  }, []);
+    session.status === 'authenticated'
+      ? getLab(user).then((res) => setLabs(res))
+      : null;
+  }, [user]);
 
   return (
     <div>

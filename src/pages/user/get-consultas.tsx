@@ -7,7 +7,7 @@ import axios from 'axios';
 export default function GetConsultas() {
   async function getConsultas(username: string) {
     const res = await axios.get(
-      `http://localhost:8280/api/consulta?username=${username}`
+      `http://localhost:8280/api/consulta?username=${username}&status=OPEN`
     );
     return res.data;
   }
@@ -26,7 +26,7 @@ export default function GetConsultas() {
     session.status === 'authenticated'
       ? getConsultas(user).then((res) => setResult(res))
       : null;
-  }, [user, result]);
+  }, [user]);
 
   return (
     <div className='container'>
@@ -46,6 +46,7 @@ export default function GetConsultas() {
           <tr>
             <td>Username</td>
             <td>Médico</td>
+            <td>Status</td>
             <td>Descrição</td>
           </tr>
         </thead>
@@ -54,6 +55,7 @@ export default function GetConsultas() {
             <tr key={consulta.id}>
               <td>{consulta.username}</td>
               <td>{consulta.medico}</td>
+              <td>{consulta.consultaStatusEnum}</td>
               <td>{consulta.description}</td>
             </tr>
           ))}

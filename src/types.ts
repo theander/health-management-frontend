@@ -18,3 +18,10 @@ export type Exam = {
   status: string;
   username: number;
 };
+export type LabType = {
+  id: number;
+  name: string;
+  description: string;
+  status: string;
+  username: string;
+};
