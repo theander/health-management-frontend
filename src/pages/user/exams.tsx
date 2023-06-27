@@ -3,11 +3,12 @@ import axios from 'axios';
 import { Exam } from '../../types';
 import jwt_decode from 'jwt-decode';
 import { useSession } from 'next-auth/react';
+import { LABS_API_BASE_URL } from '../../../components/const/url-constants';
 
 export default function Exams() {
   async function getExams(username: string) {
     const res = await axios.get(
-      `http://localhost:8380/api/lab/${user}/get-open-exams`
+      `${LABS_API_BASE_URL}/api/lab/${user}/get-open-exams`
     );
     return res.data;
   }

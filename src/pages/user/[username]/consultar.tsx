@@ -3,6 +3,7 @@ import jwt_decode from 'jwt-decode';
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
 import axios from 'axios';
+import { MEDICAL_API_BASE_URL } from '../../../../components/const/url-constants';
 
 export type RegistrarConsulta = {
   nome: string;
@@ -24,7 +25,7 @@ export default function Consultar(props: any) {
 
   async function handleSubmit(event: any) {
     event.preventDefault();
-    const resp = await axios.post('http://localhost:8280/api/consulta', {
+    const resp = await axios.post(`${MEDICAL_API_BASE_URL}/api/consulta`, {
       username: event.target.usernameField.value,
       medico: event.target.medicalField.value,
       description: event.target.descriptionField.value,

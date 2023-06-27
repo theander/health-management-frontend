@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
+import { USER_API_BASE_URL } from '../../../components/const/url-constants';
 
 export default function Consultar(props: any) {
   return (
@@ -47,7 +48,7 @@ export default function Consultar(props: any) {
 export async function getServerSideProps() {
   // Fetch data from external API
   const res = await fetch(
-    `http://localhost:8180/api/users-by-role/ROLE_MEDICAL`
+    `${USER_API_BASE_URL}/api/users-by-role/ROLE_MEDICAL`
   );
   const data = await res.json();
   // Pass data to the page via props

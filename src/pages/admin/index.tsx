@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
+import { USER_API_BASE_URL } from '../../../components/const/url-constants';
 
 export default function User(props: any) {
   return (
@@ -75,7 +76,7 @@ export default function User(props: any) {
 }
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await fetch(`http://localhost:8180/api/users`);
+  const res = await fetch(`${USER_API_BASE_URL}/api/users`);
   const data = await res.json();
   // Pass data to the page via props
   return { props: { data } };

@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Exam } from '../../types';
 import Link from 'next/link';
+import { LABS_API_BASE_URL } from '../../../components/const/url-constants';
 
 export default function ParaFazer() {
   const [exams, setExams] = useState([] as Exam[]);
   useEffect(() => {
     axios
-      .get('http://localhost:8380/api/lab?status=OPEN')
+      .get(`${LABS_API_BASE_URL}/api/lab?status=OPEN`)
       .then((resp) => setExams(resp.data));
   }, [0]);
   return (

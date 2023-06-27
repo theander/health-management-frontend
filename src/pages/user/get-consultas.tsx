@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
+import { MEDICAL_API_BASE_URL } from '../../../components/const/url-constants';
 
 export default function GetConsultas() {
   async function getConsultas(username: string) {
     const res = await axios.get(
-      `http://localhost:8280/api/consulta?username=${username}&status=OPEN`
+      `${MEDICAL_API_BASE_URL}/api/consulta?username=${username}&status=OPEN`
     );
     return res.data;
   }

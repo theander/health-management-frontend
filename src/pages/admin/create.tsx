@@ -1,11 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { USER_API_BASE_URL } from '../../../components/const/url-constants';
 
 export default function Create() {
   const router = useRouter();
-  const CREATE_USER_URL = 'http://localhost:8180/api/user/save';
-  const ADD_ROLE_TO_USER_URL = 'http://localhost:8180/api/role/addtouser';
+  const CREATE_USER_URL = `${USER_API_BASE_URL}/api/user/save`;
+  const ADD_ROLE_TO_USER_URL = `${USER_API_BASE_URL}/api/role/addtouser`;
 
   async function handleCreate(event: any) {
     event.preventDefault();

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { useSession } from 'next-auth/react';
+import { USER_API_BASE_URL } from '../../../../components/const/url-constants';
 
 export default function RegistrarConsulta(props: any) {
   const { data: session, status } = useSession();
@@ -49,7 +50,7 @@ export default function RegistrarConsulta(props: any) {
 
 export async function getServerSideProps() {
   const res = await fetch(
-    `http://localhost:8180/api/users-by-role/ROLE_MEDICAL`
+    `${USER_API_BASE_URL}/api/users-by-role/ROLE_MEDICAL`
   );
   const data = await res.json();
   return { props: { data } };

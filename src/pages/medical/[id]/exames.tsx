@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Exam, LabType } from '../../../types';
 import { useSession } from 'next-auth/react';
 import jwt_decode from 'jwt-decode';
+import { LABS_API_BASE_URL } from '../../../../components/const/url-constants';
 
 export default function Exames() {
   const route = useRouter();
@@ -12,7 +13,7 @@ export default function Exames() {
 
   async function getLab(name: string) {
     const resp = await axios.get(
-      ` http://localhost:8380/api/lab?status=OPEN&name=${name}`
+      `${LABS_API_BASE_URL}/api/lab?status=OPEN&name=${name}`
     );
     return resp.data;
   }

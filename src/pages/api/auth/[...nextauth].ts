@@ -7,6 +7,7 @@ import axios from 'axios';
 import { TokenSet } from '@auth/core/types';
 import { CredentialInput } from '@auth/core/providers';
 import config from 'next/config';
+import { USER_API_BASE_URL } from '../../../../components/const/url-constants';
 
 export default NextAuth({
   session: {
@@ -16,7 +17,7 @@ export default NextAuth({
     CredentialsProvider({
       async authorize(credentials, req) {
         const resp = await axios.post(
-          'http://localhost:8180/api/login',
+          `${USER_API_BASE_URL}/api/login`,
           {
             ...credentials,
           },

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
-import { router } from 'next/client';
+import { LABS_API_BASE_URL } from '../../../../components/const/url-constants';
 
 export default function CreateExame() {
   const route = useRouter();
@@ -26,7 +26,7 @@ export default function CreateExame() {
       event.target.descriptionField.value,
       'OPEN'
     );
-    const resp = await axios.post('http://localhost:8380/api/lab', {
+    const resp = await axios.post(`${LABS_API_BASE_URL}/api/lab`, {
       username: event.target.usernameField.value,
       name: event.target.medicalField.value,
       description: event.target.descriptionField.value,

@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useState } from 'react';
+import { USER_API_BASE_URL } from '../../../../components/const/url-constants';
 
 export default function Delete() {
   const [message, setMensage] = useState('Deleted user');
@@ -11,7 +12,7 @@ export default function Delete() {
 
   async function deleteUser(id: any) {
     const res = await axios
-      .delete(`http://localhost:8180/api/users/${id}`)
+      .delete(`${USER_API_BASE_URL}/api/users/${id}`)
       .then((res) => {
         setMensage('User deleted');
       })

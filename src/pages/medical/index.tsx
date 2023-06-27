@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { MEDICAL_API_BASE_URL } from '../../../components/const/url-constants';
 
 export default function Medical() {
   const session = useSession();
@@ -17,7 +18,7 @@ export default function Medical() {
 
   async function getConsultas(username: string) {
     const res = await axios.get(
-      `http://localhost:8280/api/consulta?medico=${username}&status=OPEN`
+      `${MEDICAL_API_BASE_URL}/api/consulta?medico=${username}&status=OPEN`
     );
     return res.data;
   }

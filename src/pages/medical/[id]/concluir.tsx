@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useState } from 'react';
+import { MEDICAL_API_BASE_URL } from '../../../../components/const/url-constants';
 
 export default function Concluir() {
   const [message, setMensage] = useState('Deleted user');
@@ -11,7 +12,7 @@ export default function Concluir() {
 
   async function deleteUser(id: any) {
     const res = await axios
-      .put(`http://localhost:8280/api/consulta/${id}/close`)
+      .put(`${MEDICAL_API_BASE_URL}/api/consulta/${id}/close`)
       .then((res) => {
         setMensage('Consulta encerrada');
       })

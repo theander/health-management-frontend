@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import Link from 'next/link';
+import { MEDICAL_API_BASE_URL } from '../../../components/const/url-constants';
 
 export default function Consultas() {
   async function handleConcluir(event: any) {
@@ -10,8 +11,7 @@ export default function Consultas() {
   }
   async function getConsultas(username: string) {
     const res = await axios.get(
-      // `http://localhost:8280/api/consulta?medico=${username}`
-      `http://localhost:8280/api/consulta?medico=ander_medical`
+      `${MEDICAL_API_BASE_URL}/api/consulta?medico=${username}`
     );
     return res.data;
   }
