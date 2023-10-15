@@ -1,20 +1,22 @@
-import { useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import jwt_decode from 'jwt-decode';
+import { sign } from 'crypto';
 
 export default function Home() {
   const session = useSession();
   const route = useRouter();
   let role;
+
   if (session.status === 'unauthenticated') {
     route.push('/login');
   }
   if (session.status === 'authenticated') {
     const { accessToken } = { accessToken: '', ...session?.data };
-    let { roles: userRoles } = jwt_decode(accessToken || '') as {
-      roles: string[];
-    };
-    role = userRoles[0];
+    // let { roles: userRoles } = jwt_decode(accessToken || '') as {
+    //   roles: string[];
+    // };
+    role = ['ROLE_ADMIN'][0]; // userRoles[0];
   }
   return (
     <div className='container'>

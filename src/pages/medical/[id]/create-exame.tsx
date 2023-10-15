@@ -32,7 +32,7 @@ export default function CreateExame() {
       description: event.target.descriptionField.value,
       status: 'OPEN',
     });
-    if (resp.status === 200) {
+    if ([200 | 201].includes(resp.status)) {
       await route.push('/medical');
     }
   }

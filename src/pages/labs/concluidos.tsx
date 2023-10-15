@@ -29,7 +29,7 @@ export default function Concluidos() {
           <tr>
             <td>Id</td>
             <td>Nome</td>
-            <td>Descrisção</td>
+            <td>Descrição</td>
             <td>Status</td>
             <td>Username</td>
           </tr>

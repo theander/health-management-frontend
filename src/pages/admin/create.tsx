@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { USER_API_BASE_URL } from '../../../components/const/url-constants';
@@ -14,6 +14,7 @@ export default function Create() {
       name: event.target.name.value,
       password: event.target.password.value,
       username: event.target.username.value,
+      email: event.target.email.value,
     });
 
     if (resp.status === 201) {
@@ -51,15 +52,27 @@ export default function Create() {
             id='floatingInput'
             placeholder='João da silva'
             name='username'
+            required
           />
           <label htmlFor='floatingInput'>Username</label>
         </div>
-
+        <div className='form-floating'>
+          <input
+            type='email'
+            className='form-control'
+            id='floatingInput'
+            placeholder='joao@gmail.com'
+            name='email'
+            required
+          />
+          <label htmlFor='floatingInput'>E-mail</label>
+        </div>
         <div className='form-floating'>
           <select
             className='form-select'
             aria-label='Default select example'
             name={'role'}
+            required
           >
             <option value='ROLE_USER'>User</option>
             <option value='ROLE_MEDICAL'>Medical</option>
@@ -82,7 +95,9 @@ export default function Create() {
         <button className='w-100 btn btn-lg btn-primary' type='submit'>
           Criar usuário
         </button>
-        <p className='mt-5 mb-3 text-muted'>&copy; 2017–2022</p>
+        <p className='mt-5 mb-3 text-muted'>
+          &copy; 2022–{new Date().getFullYear()}
+        </p>
       </form>
     </div>
   );

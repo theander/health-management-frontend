@@ -30,7 +30,7 @@ export default function ParaFazer() {
           <tr>
             <td>Id</td>
             <td>Nome</td>
-            <td>Descrisção</td>
+            <td>Descrição</td>
             <td>Status</td>
             <td>Username</td>
             <td>Concluir</td>

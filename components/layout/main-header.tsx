@@ -33,11 +33,10 @@ export default function MainHeader() {
           </a>
           {session.status === 'unauthenticated' ? null : (
             <a
+              href='/login'
               className='py-2 text-dark text-decoration-none'
-              href='/home'
-              onClick={async () => {
-                await signOut();
-                await router.push('/login');
+              onClick={() => {
+                signOut();
               }}
             >
               Logout

@@ -1,21 +1,29 @@
-import { Auth } from '@auth/core';
 import NextAuth from 'next-auth';
-import CredentialsProvider, {
-  CredentialsConfig,
-} from 'next-auth/providers/credentials';
-import axios from 'axios';
-import { TokenSet } from '@auth/core/types';
-import { CredentialInput } from '@auth/core/providers';
-import config from 'next/config';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
 import { USER_API_BASE_URL } from '../../../../components/const/url-constants';
+import axios from 'axios';
+import { log } from 'util';
+import { mockProviders } from 'next-auth/client/__tests__/helpers/mocks';
+import credentials = mockProviders.credentials;
 
 export default NextAuth({
   session: {
     strategy: 'jwt',
   },
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID || 'ID_GOOGLE',
+      clientSecret: process.env.GOOGLE_SECRET || 'ID_GOOGLE',
+    }),
     CredentialsProvider({
       async authorize(credentials, req) {
+        // if (!credentials.password) {
+        //   const credi = await axios.get(
+        //     `${USER_API_BASE_URL}/api/user-by-email/${credentials.username}`
+        //   );
+        //   credentials = await credi.data;
+        // }
         const resp = await axios.post(
           `${USER_API_BASE_URL}/api/login`,
           {

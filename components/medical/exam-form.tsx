@@ -38,7 +38,9 @@ export default function ExamForm() {
         <button className='w-100 btn btn-lg btn-primary' type='submit'>
           Sign in
         </button>
-        <p className='mt-5 mb-3 text-muted'>&copy; 2017–2022</p>
+        <p className='mt-5 mb-3 text-muted'>
+          &copy; 2022–{new Date().getFullYear()}
+        </p>
       </form>
     </div>
   );
