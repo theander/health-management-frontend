@@ -3,7 +3,6 @@ import Image from 'next/image';
 
 export default function LoginBtn() {
   const { data: session } = useSession();
-  console.log(session);
   if (session) {
     return (
       <>
@@ -17,7 +16,10 @@ export default function LoginBtn() {
       Not signed in <br />
       <button
         className='w-100 btn btn-lg btn-primary'
-        onClick={() => signIn('google')}
+        onClick={() => {
+          signIn('google');
+          localStorage.setItem('sign', 'google');
+        }}
       >
         <Image
           src='./icons/google.svg'

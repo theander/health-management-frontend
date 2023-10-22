@@ -9,12 +9,15 @@ import { MEDICAL_API_BASE_URL } from '../../../components/const/url-constants';
 export default function Medical() {
   const session = useSession();
   const route = useRouter();
+
+  if (session.status === 'loading') {
+    return <p>Loading</p>;
+  }
+
   if (session.status === 'unauthenticated') {
     route.push('/login');
   }
-  async function handleConcluir(event: any) {
-    console.log(event.target.value);
-  }
+  async function handleConcluir(event: any) {}
 
   async function getConsultas(username: string) {
     const res = await axios.get(

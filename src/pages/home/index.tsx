@@ -1,22 +1,27 @@
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import jwt_decode from 'jwt-decode';
-import { sign } from 'crypto';
+import { useEffect, useState } from 'react';
 
-export default function Home() {
+export default function Home(props: any) {
+  const [showChild, setShowChild] = useState(false);
   const session = useSession();
-  const route = useRouter();
+  const router = useRouter();
   let role;
-
-  if (session.status === 'unauthenticated') {
-    route.push('/login');
+  useEffect(() => {
+    setShowChild(true);
+  }, []);
+  if (!showChild) {
+    return null;
   }
-  if (session.status === 'authenticated') {
-    const { accessToken } = { accessToken: '', ...session?.data };
-    // let { roles: userRoles } = jwt_decode(accessToken || '') as {
-    //   roles: string[];
-    // };
-    role = ['ROLE_ADMIN'][0]; // userRoles[0];
+  if (typeof window === 'undefined') {
+    return <></>;
+  } else {
+    if (session.status === 'loading') {
+      return <p>Loading...</p>;
+    } else if (session.status !== 'authenticated') {
+      router.push('/login');
+    }
+    role = localStorage.getItem('role');
   }
   return (
     <div className='container'>
@@ -77,6 +82,22 @@ export default function Home() {
                 </p>
                 <a href='/medical' className='btn btn-primary'>
                   Ir para serviço medical
+                </a>
+              </div>
+            </div>
+          </div>
+        ) : null}
+        {role === 'ROLE_ADMIN' || role === 'ROLE_MEDICAL' ? (
+          <div className='col-3 fixed-bottom'>
+            <div className='card'>
+              <div className='card-body'>
+                <h5 className='card-title'>Statisticas</h5>
+                <p className='card-text'>
+                  Statisticas é o serviço reponsável por mostrar as estatisticas
+                  do sistema
+                </p>
+                <a href='/statistics' className='btn btn-primary'>
+                  Verificar estatisticas do sistema
                 </a>
               </div>
             </div>

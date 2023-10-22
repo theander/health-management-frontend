@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { USER_API_BASE_URL } from '../../../../components/const/url-constants';
 import { useRouter } from 'next/router';
-import { router } from 'next/client';
 
 export default function Update({ data }) {
   const router = useRouter();
   const UPDATE_USER_URL = `${USER_API_BASE_URL}/api/user/update`;
   const [user, setUser] = useState(data);
 
-  console.log(data);
   async function handleUpdate(event: any) {
     event.preventDefault();
     const resp = await axios.put(UPDATE_USER_URL, {
@@ -21,6 +19,7 @@ export default function Update({ data }) {
       router.push('/admin');
     }
   }
+
   function handleOnChange(event: any) {
     const { name, value } = event.target;
 

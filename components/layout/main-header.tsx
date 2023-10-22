@@ -37,6 +37,8 @@ export default function MainHeader() {
               className='py-2 text-dark text-decoration-none'
               onClick={() => {
                 signOut();
+
+                localStorage.setItem('role', 'null');
               }}
             >
               Logout

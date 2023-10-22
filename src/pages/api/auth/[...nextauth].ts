@@ -1,3 +1,5 @@
+// @ts-ignore
+
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
@@ -87,6 +89,7 @@ declare module '@auth/core/jwt' {
     access_token: string;
     expires_at: number;
     refresh_token: string;
+    role: string;
     error?: 'RefreshAccessTokenError';
   }
 }

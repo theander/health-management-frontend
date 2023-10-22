@@ -7,8 +7,12 @@ export default function AuthForm() {
   const [authorizationError, setAuthorizationError] = useState(false);
   const route = useRouter();
   const session = useSession();
+  if (session.status === 'loading') {
+    return <p>Loading...</p>;
+  }
+
   if (session.status === 'authenticated') {
-    route.push('/home');
+    route.push('/home/main');
   }
 
   async function submitLogin(event: any) {
