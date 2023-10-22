@@ -20,6 +20,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./Dockerfile
+          file: ./Dockerfile_prev
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/health-management-frontend:1.0.${{ github.run_number }}
