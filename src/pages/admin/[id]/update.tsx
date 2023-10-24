@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { USER_API_BASE_URL } from '../../../../components/const/url-constants';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
+import Loading from '../../../../components/general/loading';
 
 export default function Update({ data }) {
   const router = useRouter();
+  const session = useSession();
   const UPDATE_USER_URL = `${USER_API_BASE_URL}/api/user/update`;
   const [user, setUser] = useState(data);
 
@@ -25,7 +28,9 @@ export default function Update({ data }) {
 
     setUser({ ...user, [name]: value });
   }
-
+  if (session.status === 'loading') {
+    return <Loading />;
+  }
   return (
     <div className='form-signin w-50 m-auto'>
       <form onSubmit={handleUpdate}>

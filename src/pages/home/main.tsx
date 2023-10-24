@@ -3,6 +3,7 @@ import { USER_API_BASE_URL } from '../../../components/const/url-constants';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import jwt_decode from 'jwt-decode';
+import Loading from '../../../components/general/loading';
 
 export default function Main(props: any) {
   const [roles, setRoles] = useState([]);
@@ -27,7 +28,7 @@ export default function Main(props: any) {
     return <></>;
   } else {
     if (session.status === 'loading') {
-      return <></>;
+      return <Loading />;
     } else if (session.status !== 'authenticated') {
       router.push('/login');
     } else {

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import Link from 'next/link';
 import { MEDICAL_API_BASE_URL } from '../../../components/const/url-constants';
+import Loading from '../../../components/general/loading';
 
 export default function Consultas() {
   async function handleConcluir(event: any) {
@@ -19,6 +20,9 @@ export default function Consultas() {
   const [result, setResult] = useState([]);
   let user = '';
 
+  if (session.status === 'loading') {
+    return <Loading />;
+  }
   if (session.status === 'authenticated') {
     const { accessToken } = { accessToken: '', ...session?.data };
     let { sub: username } = jwt_decode(accessToken || '') as { sub: string };

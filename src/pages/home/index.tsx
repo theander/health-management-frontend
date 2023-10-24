@@ -1,6 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Loading from '../../../components/general/loading';
 
 export default function Home(props: any) {
   const [showChild, setShowChild] = useState(false);
@@ -17,7 +18,7 @@ export default function Home(props: any) {
     return <></>;
   } else {
     if (session.status === 'loading') {
-      return <p>Loading...</p>;
+      return <Loading />;
     } else if (session.status !== 'authenticated') {
       router.push('/login');
     }
@@ -27,7 +28,7 @@ export default function Home(props: any) {
     <div className='container'>
       <div className='row'>
         {role === 'ROLE_ADMIN' ? (
-          <div className='col-3'>
+          <div className='col-3 p-2'>
             <div className='card'>
               <div className='card-body'>
                 <h5 className='card-title'>Admin</h5>
@@ -43,7 +44,7 @@ export default function Home(props: any) {
         ) : null}
 
         {role === 'ROLE_ADMIN' || role === 'ROLE_LAB' ? (
-          <div className='col-3'>
+          <div className='col-3 p-2'>
             <div className='card'>
               <div className='card-body'>
                 <h5 className='card-title'>Labs</h5>
@@ -58,7 +59,7 @@ export default function Home(props: any) {
           </div>
         ) : null}
         {role === 'ROLE_ADMIN' || role === 'ROLE_USER' ? (
-          <div className='col-3'>
+          <div className='col-3 p-2'>
             <div className='card'>
               <div className='card-body'>
                 <h5 className='card-title'>User</h5>
@@ -73,7 +74,7 @@ export default function Home(props: any) {
           </div>
         ) : null}
         {role === 'ROLE_ADMIN' || role === 'ROLE_MEDICAL' ? (
-          <div className='col-3'>
+          <div className='col-3 p-2'>
             <div className='card'>
               <div className='card-body'>
                 <h5 className='card-title'>Medical</h5>
@@ -87,8 +88,8 @@ export default function Home(props: any) {
             </div>
           </div>
         ) : null}
-        {role === 'ROLE_ADMIN' || role === 'ROLE_MEDICAL' ? (
-          <div className='col-3 fixed-bottom'>
+        {role !== '' ? (
+          <div className='col-3 p-2'>
             <div className='card'>
               <div className='card-body'>
                 <h5 className='card-title'>Statisticas</h5>

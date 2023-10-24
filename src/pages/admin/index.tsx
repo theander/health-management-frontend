@@ -1,8 +1,14 @@
 import Link from 'next/link';
 import React from 'react';
 import { USER_API_BASE_URL } from '../../../components/const/url-constants';
+import Loading from '../../../components/general/loading';
+import { useSession } from 'next-auth/react';
 
 export default function User(props: any) {
+  const session = useSession();
+  if (session.status === 'loading') {
+    return <Loading />;
+  }
   return (
     <div>
       <nav>

@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { USER_API_BASE_URL } from '../../../components/const/url-constants';
+import Loading from '../../../components/general/loading';
+import { useSession } from 'next-auth/react';
 
 export default function Create() {
   const router = useRouter();
+  const session = useSession();
   const CREATE_USER_URL = `${USER_API_BASE_URL}/api/user/save`;
   const ADD_ROLE_TO_USER_URL = `${USER_API_BASE_URL}/api/role/addtouser`;
 
@@ -28,6 +31,10 @@ export default function Create() {
         router.push('/admin');
       }
     }
+  }
+
+  if (session.status === 'loading') {
+    return <Loading />;
   }
 
   return (

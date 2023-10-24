@@ -1,50 +1,25 @@
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
-import React, { useEffect, useState } from 'react';
+import { getSession, useSession } from 'next-auth/react';
+import React from 'react';
 import jwt_decode from 'jwt-decode';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { MEDICAL_API_BASE_URL } from '../../../components/const/url-constants';
+import Loading from '../../../components/general/loading';
 
-export default function Medical() {
+export default function Medical(props: any) {
   const session = useSession();
   const route = useRouter();
 
   if (session.status === 'loading') {
-    return <p>Loading</p>;
-  }
-
-  if (session.status === 'unauthenticated') {
+    return <Loading />;
+  } else if (session.status === 'unauthenticated') {
     route.push('/login');
   }
-  async function handleConcluir(event: any) {}
-
-  async function getConsultas(username: string) {
-    const res = await axios.get(
-      `${MEDICAL_API_BASE_URL}/api/consulta?medico=${username}&status=OPEN`
-    );
-    return res.data;
-  }
-
-  const [result, setResult] = useState([]);
-  let user = '';
-
-  if (session.status === 'authenticated') {
-    const { accessToken } = { accessToken: '', ...session?.data };
-    let { sub: username } = jwt_decode(accessToken || '') as { sub: string };
-    user = username;
-  } else {
-    <p>Não autenticado</p>;
-  }
-  useEffect(() => {
-    session.status === 'authenticated'
-      ? getConsultas(user).then((res) => setResult(res))
-      : null;
-  }, [user]);
 
   return (
     <div className='container'>
-      {result.length > 0 ? (
+      {props.consulta?.length > 0 ? (
         <table className='table'>
           <thead>
             <tr>
@@ -55,7 +30,7 @@ export default function Medical() {
             </tr>
           </thead>
           <tbody>
-            {result.map((consulta: any) => (
+            {props.consulta?.map((consulta: any) => (
               <tr key={consulta.id}>
                 <td>{consulta.medico}</td>
                 <td>{consulta.username}</td>
@@ -104,11 +79,31 @@ export default function Medical() {
             ))}
           </tbody>
         </table>
-      ) : session.status === 'loading' ? (
-        <p>Loading</p>
       ) : (
         <h2>Sem Consultas por enquanto</h2>
       )}
     </div>
   );
+}
+
+export async function getServerSideProps(ctx: any) {
+  const session = await getSession(ctx);
+  if (!session) {
+    return {
+      props: {
+        error: 'Session Error',
+      },
+    };
+  }
+  const { accessToken } = { accessToken: '', ...session };
+  let { sub: username } = jwt_decode(accessToken || '') as { sub: string };
+  const res = await axios.get(
+    `${MEDICAL_API_BASE_URL}/api/consulta?medico=${username}&status=OPEN`
+  );
+  const consulta = await res.data;
+  return {
+    props: {
+      consulta,
+    },
+  };
 }

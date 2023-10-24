@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import LoginBtn from '../login/login-btn';
+import Loading from '../general/loading';
 
 export default function AuthForm() {
   const [authorizationError, setAuthorizationError] = useState(false);
   const route = useRouter();
   const session = useSession();
   if (session.status === 'loading') {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   if (session.status === 'authenticated') {

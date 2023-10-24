@@ -6,6 +6,7 @@ import { Exam, LabType } from '../../../types';
 import { useSession } from 'next-auth/react';
 import jwt_decode from 'jwt-decode';
 import { LABS_API_BASE_URL } from '../../../../components/const/url-constants';
+import Loading from '../../../../components/general/loading';
 
 export default function Exames() {
   const route = useRouter();
@@ -22,7 +23,9 @@ export default function Exames() {
   const session = useSession();
 
   let user = '';
-
+  if (session.status === 'loading') {
+    return <Loading />;
+  }
   if (session.status === 'authenticated') {
     const { accessToken } = { accessToken: '', ...session?.data };
     let { sub: username } = jwt_decode(accessToken || '') as { sub: string };

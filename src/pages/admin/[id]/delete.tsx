@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useState } from 'react';
 import { USER_API_BASE_URL } from '../../../../components/const/url-constants';
+import Loading from '../../../../components/general/loading';
 
 export default function Delete() {
   const [message, setMensage] = useState('Deleted user');
@@ -30,5 +31,5 @@ export default function Delete() {
         }, 3000);
       });
   }
-  return loading ? <h3>Loading</h3> : <h1>{message}</h1>;
+  return loading ? <Loading /> : <strong>{message}</strong>;
 }

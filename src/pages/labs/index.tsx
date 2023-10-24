@@ -1,10 +1,14 @@
 import React from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import Loading from '../../../components/general/loading';
 
 export default function Labs() {
   const session = useSession();
   const route = useRouter();
+  if (session.status === 'loading') {
+    return <Loading />;
+  }
   if (session.status === 'unauthenticated') {
     route.push('/login');
   }

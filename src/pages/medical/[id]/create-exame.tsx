@@ -3,6 +3,8 @@ import { useSession } from 'next-auth/react';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import { LABS_API_BASE_URL } from '../../../../components/const/url-constants';
+import Loading from '../../../../components/general/loading';
+import React from 'react';
 
 export default function CreateExame() {
   const route = useRouter();
@@ -36,7 +38,9 @@ export default function CreateExame() {
       await route.push('/medical');
     }
   }
-
+  if (session.status === 'loading') {
+    return <Loading />;
+  }
   return (
     <form onSubmit={handleSubmit} className='w-50 m-auto'>
       <legend>Registrar exame</legend>
