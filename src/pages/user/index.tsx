@@ -10,7 +10,7 @@ export default function UserHome() {
   return (
     <div className='container'>
       <div className='row'>
-        <div className='col-3'>
+        <div className='col-3 p-1'>
           <div className='card'>
             <div className='card-body'>
               <h5 className='card-title'>Consulta</h5>
@@ -22,7 +22,7 @@ export default function UserHome() {
           </div>
         </div>
 
-        <div className='col-3'>
+        <div className='col-3 p-1'>
           <div className='card'>
             <div className='card-body'>
               <h5 className='card-title'>Exames</h5>
@@ -34,7 +34,7 @@ export default function UserHome() {
           </div>
         </div>
 
-        <div className='col-3'>
+        <div className='col-3 p-1'>
           <div className='card'>
             <div className='card-body'>
               <h5 className='card-title'>Ver Consultas</h5>

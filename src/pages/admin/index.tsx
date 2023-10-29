@@ -3,11 +3,19 @@ import React from 'react';
 import { USER_API_BASE_URL } from '../../../components/const/url-constants';
 import Loading from '../../../components/general/loading';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 export default function User(props: any) {
   const session = useSession();
+  const router = useRouter();
   if (session.status === 'loading') {
     return <Loading />;
+  }
+  if (props?.status) {
+    return <h2>Você deve estar cadastrado!!! </h2>;
+  }
+  if (session.status === 'unauthenticated') {
+    router.push('/login');
   }
   return (
     <div>
@@ -16,7 +24,7 @@ export default function User(props: any) {
           <li className='nav-item'>
             <button className='btn btn-outline-light' aria-current='page'>
               <Link className='text-decoration-none' href='/admin/create'>
-                Add user
+                Adicionar usuário
               </Link>
             </button>
           </li>
@@ -80,10 +88,14 @@ export default function User(props: any) {
     </div>
   );
 }
+
 export async function getServerSideProps() {
   // Fetch data from external API
   const res = await fetch(`${USER_API_BASE_URL}/api/users`);
   const data = await res.json();
+  if ([404].includes(res.status)) {
+    return { props: { data, status: res.status } };
+  }
   // Pass data to the page via props
   return { props: { data } };
 }

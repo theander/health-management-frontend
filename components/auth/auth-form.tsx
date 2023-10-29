@@ -40,7 +40,7 @@ export default function AuthForm() {
 
   return (
     <>
-      <div className='form-signin w-50 m-auto'>
+      <div className='form-signin w-25 m-auto'>
         <form onSubmit={submitLogin}>
           <img
             className='mb-4'
@@ -49,9 +49,9 @@ export default function AuthForm() {
             width='72'
             height='57'
           ></img>
-          <h1 className='h3 mb-3 fw-normal'>Sign in</h1>
+          <h1 className='h3 mb-3 fw-normal p-1'>Sign in</h1>
 
-          <div className='form-floating'>
+          <div className='form-floating p-1'>
             <input
               type='text'
               className='form-control'
@@ -62,7 +62,7 @@ export default function AuthForm() {
             />
             <label htmlFor='floatingInput'>Username</label>
           </div>
-          <div className='form-floating'>
+          <div className='form-floating p-1'>
             <input
               type='password'
               className='form-control'
@@ -73,13 +73,14 @@ export default function AuthForm() {
             />
             <label htmlFor='floatingPassword'>Password</label>
           </div>
-
-          <button className='w-100 btn btn-lg btn-primary' type='submit'>
-            Sign in
-          </button>
+          <div className='form-floating p-1'>
+            <button className='w-100 btn btn-lg btn-primary  p-2' type='submit'>
+              Sign in
+            </button>
+          </div>
           <p>{authorizationError && 'Usuário ou senha inválida'}</p>
           <LoginBtn />
-          <p className='mt-5 mb-3 text-muted'>
+          <p className='mt-5 mb-3 text-muted  p-1'>
             &copy; 2022–{new Date().getFullYear()}
           </p>
         </form>

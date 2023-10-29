@@ -1,10 +1,13 @@
 import axios from 'axios';
 import { getSession, useSession } from 'next-auth/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import jwt_decode from 'jwt-decode';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { MEDICAL_API_BASE_URL } from '../../../components/const/url-constants';
+import {
+  MEDICAL_API_BASE_URL,
+  USER_API_BASE_URL,
+} from '../../../components/const/url-constants';
 import Loading from '../../../components/general/loading';
 
 export default function Medical(props: any) {
@@ -95,8 +98,14 @@ export async function getServerSideProps(ctx: any) {
       },
     };
   }
-  const { accessToken } = { accessToken: '', ...session };
-  let { sub: username } = jwt_decode(accessToken || '') as { sub: string };
+
+  const { user } = session;
+  const resp = await fetch(
+    `${USER_API_BASE_URL}/api/user-by-email/${user?.email}`
+  );
+
+  const { username } = await resp.json();
+
   const res = await axios.get(
     `${MEDICAL_API_BASE_URL}/api/consulta?medico=${username}&status=OPEN`
   );

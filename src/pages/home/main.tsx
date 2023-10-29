@@ -34,21 +34,25 @@ export default function Main(props: any) {
     } else {
       const { accessToken } = { accessToken: '', ...session?.data };
       if (accessToken.length > 25) {
-        let { roles: userRoles } = jwt_decode(accessToken || '') as {
+        let { sub: username, roles: userRoles } = jwt_decode(
+          accessToken || ''
+        ) as {
           roles: string[];
+          sub: string;
         };
 
         roles.length < 2 && roles
           ? setRoles((prevState) => [...prevState, userRoles[0]])
           : null;
         localStorage.setItem('role', userRoles[0]);
+        localStorage.setItem('username', username);
         router.push('/home');
       } else {
         let userRole = props.result?.roles?.map((role: any) => role.name)[0];
-
         roles.length < 2 && roles
           ? setRoles((prevState) => [...prevState, userRole])
           : null;
+        localStorage.setItem('username', props.result.username);
         localStorage.setItem('role', userRole);
         router.push('/home');
       }
@@ -57,6 +61,7 @@ export default function Main(props: any) {
 
   return <></>;
 }
+
 export async function getServerSideProps(ctx: any) {
   const session = await getSession(ctx);
   if (!session) {
@@ -70,7 +75,6 @@ export async function getServerSideProps(ctx: any) {
   const resp = await fetch(
     `${USER_API_BASE_URL}/api/user-by-email/${user?.email}`
   );
-  console.log(resp);
   if (resp.status === 200) {
     const result = await resp.json();
 

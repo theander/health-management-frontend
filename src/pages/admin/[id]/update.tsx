@@ -28,14 +28,17 @@ export default function Update({ data }) {
 
     setUser({ ...user, [name]: value });
   }
+
   if (session.status === 'loading') {
     return <Loading />;
   }
   return (
     <div className='form-signin w-50 m-auto'>
       <form onSubmit={handleUpdate}>
-        <h1 className='h3 mb-3 fw-normal'>Atualizar usuário</h1>
-        <div className='form-floating'>
+        <div className='form-floating p-1'>
+          <h1 className='h3 mb-3 fw-normal'>Atualizar usuário</h1>
+        </div>
+        <div className='form-floating p-1'>
           <input
             type='text'
             className='form-control'
@@ -47,7 +50,7 @@ export default function Update({ data }) {
           />
           <label htmlFor='floatingInput'>{data.name}</label>
         </div>
-        <div className='form-floating'>
+        <div className='form-floating p-1'>
           <input
             type='text'
             className='form-control'
@@ -59,7 +62,7 @@ export default function Update({ data }) {
           />
           <label htmlFor='floatingInput'>Username</label>
         </div>
-        <div className='form-floating'>
+        <div className='form-floating p-1'>
           <input
             type='email'
             className='form-control'
@@ -71,12 +74,16 @@ export default function Update({ data }) {
           />
           <label htmlFor='floatingInput'>E-mail</label>
         </div>
-        <button className='w-100 btn btn-lg btn-primary' type='submit'>
-          Atualizar usuário
-        </button>
-        <p className='mt-5 mb-3 text-muted'>
-          &copy; 2022–{new Date().getFullYear()}
-        </p>
+        <div className='form-floating p-1'>
+          <button className='w-100 btn btn-lg btn-primary' type='submit'>
+            Atualizar usuário
+          </button>
+        </div>
+        <div className='form-floating p-1'>
+          <p className='mt-5 mb-3 text-muted'>
+            &copy; 2022–{new Date().getFullYear()}
+          </p>
+        </div>
       </form>
     </div>
   );

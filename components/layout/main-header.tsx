@@ -5,43 +5,35 @@ import { useRouter } from 'next/router';
 
 export default function MainHeader() {
   const session = useSession();
-  const router = useRouter();
 
   return (
     <header>
-      <div className='d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom'>
+      <div className='d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom p-2'>
         <a
           href='/'
-          className='d-flex align-items-center text-dark text-decoration-none'
+          className='d-flex align-items-center text-dark text-decoration-none p-2'
         >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='40'
-            height='32'
-            className='me-2'
-            viewBox='0 0 118 94'
-            role='img'
-          >
-            <title>Health Management</title>
-          </svg>
-          <span className='fs-4'>Health Management</span>
+          <h5 className='fs-4'>Health Management</h5>
         </a>
 
         <nav className='d-inline-flex mt-2 mt-md-0 ms-md-auto'>
-          <a className='me-3 py-2 text-dark text-decoration-none' href='/home'>
-            Home
+          <a
+            className='me-3 py-2 text-dark text-decoration-none p-2'
+            href='/home'
+          >
+            <h5 className='fs-4'>Home</h5>
           </a>
           {session.status === 'unauthenticated' ? null : (
             <a
               href='/login'
-              className='py-2 text-dark text-decoration-none'
+              className='py-2 text-dark text-decoration-none p-2'
               onClick={() => {
-                signOut();
-
                 localStorage.setItem('role', 'null');
+                localStorage.setItem('username', 'null');
+                signOut();
               }}
             >
-              Logout
+              <h5 className='fs-4'> Logout</h5>
             </a>
           )}
         </nav>

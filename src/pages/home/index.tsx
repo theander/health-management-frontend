@@ -28,7 +28,7 @@ export default function Home(props: any) {
     <div className='container'>
       <div className='row'>
         {role === 'ROLE_ADMIN' ? (
-          <div className='col-3 p-2'>
+          <div className='col-3 p-1'>
             <div className='card'>
               <div className='card-body'>
                 <h5 className='card-title'>Admin</h5>
@@ -44,7 +44,7 @@ export default function Home(props: any) {
         ) : null}
 
         {role === 'ROLE_ADMIN' || role === 'ROLE_LAB' ? (
-          <div className='col-3 p-2'>
+          <div className='col-3 p-1'>
             <div className='card'>
               <div className='card-body'>
                 <h5 className='card-title'>Labs</h5>
@@ -59,7 +59,7 @@ export default function Home(props: any) {
           </div>
         ) : null}
         {role === 'ROLE_ADMIN' || role === 'ROLE_USER' ? (
-          <div className='col-3 p-2'>
+          <div className='col-3 p-1'>
             <div className='card'>
               <div className='card-body'>
                 <h5 className='card-title'>User</h5>
@@ -74,7 +74,7 @@ export default function Home(props: any) {
           </div>
         ) : null}
         {role === 'ROLE_ADMIN' || role === 'ROLE_MEDICAL' ? (
-          <div className='col-3 p-2'>
+          <div className='col-3 p-1'>
             <div className='card'>
               <div className='card-body'>
                 <h5 className='card-title'>Medical</h5>
@@ -89,7 +89,7 @@ export default function Home(props: any) {
           </div>
         ) : null}
         {role !== '' ? (
-          <div className='col-3 p-2'>
+          <div className='col-3 p-1'>
             <div className='card'>
               <div className='card-body'>
                 <h5 className='card-title'>Statisticas</h5>

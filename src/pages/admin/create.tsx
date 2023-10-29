@@ -42,7 +42,7 @@ export default function Create() {
       <form onSubmit={handleCreate}>
         <h1 className='h3 mb-3 fw-normal'>Criar um novo usuário</h1>
 
-        <div className='form-floating'>
+        <div className='form-floating p-1'>
           <input
             type='text'
             className='form-control'
@@ -52,7 +52,7 @@ export default function Create() {
           />
           <label htmlFor='floatingInput'>Nome</label>
         </div>
-        <div className='form-floating'>
+        <div className='form-floating p-1'>
           <input
             type='text'
             className='form-control'
@@ -63,7 +63,7 @@ export default function Create() {
           />
           <label htmlFor='floatingInput'>Username</label>
         </div>
-        <div className='form-floating'>
+        <div className='form-floating p-1'>
           <input
             type='email'
             className='form-control'
@@ -74,7 +74,7 @@ export default function Create() {
           />
           <label htmlFor='floatingInput'>E-mail</label>
         </div>
-        <div className='form-floating'>
+        <div className='form-floating p-1'>
           <select
             className='form-select'
             aria-label='Default select example'
@@ -88,7 +88,7 @@ export default function Create() {
           </select>
           <label htmlFor='floatingInput'>Role</label>
         </div>
-        <div className='form-floating'>
+        <div className='form-floating p-1'>
           <input
             type='password'
             className='form-control'
@@ -98,10 +98,11 @@ export default function Create() {
           />
           <label htmlFor='floatingPassword'>Senha</label>
         </div>
-
-        <button className='w-100 btn btn-lg btn-primary' type='submit'>
-          Criar usuário
-        </button>
+        <div className='form-floating p-1'>
+          <button className='w-100 btn btn-lg btn-primary' type='submit'>
+            Criar usuário
+          </button>
+        </div>
         <p className='mt-5 mb-3 text-muted'>
           &copy; 2022–{new Date().getFullYear()}
         </p>
