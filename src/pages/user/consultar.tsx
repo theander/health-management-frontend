@@ -1,8 +1,19 @@
 import Link from 'next/link';
 import React from 'react';
 import { USER_API_BASE_URL } from '../../../components/const/url-constants';
+import { useSession } from 'next-auth/react';
+import Loading from '../../../components/general/loading';
+import { useRouter } from 'next/router';
 
 export default function Consultar(props: any) {
+  const session = useSession();
+  const route = useRouter();
+
+  if (session.status === 'loading') {
+    return <Loading />;
+  } else if (session.status === 'unauthenticated') {
+    route.push('/login');
+  }
   return (
     <div>
       <div className='container'>

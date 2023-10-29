@@ -1,12 +1,17 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import Loading from '../../../components/general/loading';
+import React from 'react';
 
 export default function UserHome() {
   const session = useSession();
   const route = useRouter();
-  if (session.status === 'unauthenticated') {
+  if (session.status === 'loading') {
+    return <Loading />;
+  } else if (session.status === 'unauthenticated') {
     route.push('/login');
   }
+
   return (
     <div className='container'>
       <div className='row'>

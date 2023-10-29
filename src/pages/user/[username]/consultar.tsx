@@ -36,7 +36,7 @@ export default function Consultar(props: any) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className='w-50 m-auto'>
+    <form onSubmit={handleSubmit} className='w-25 m-auto'>
       <legend>Registrar consulta</legend>
       <div className='mb-3'>
         <label htmlFor='disabledTextInputUserName' className='form-label'>
@@ -65,21 +65,21 @@ export default function Consultar(props: any) {
           name='medicalField'
         />
       </div>
-      <div className='mb-3'>
+      <div className='mb-3 heigth-50'>
         <label htmlFor='disabledTextInputData' className='form-label'>
           Descrição
         </label>
-        <input
-          type='text'
+        <textarea
           id='disabledTextInput'
           className='form-control'
           placeholder='Descrição'
           name='descriptionField'
-        />
+          rows='3'
+        ></textarea>
       </div>
 
       <button type='submit' className='btn btn-primary'>
-        Submit
+        Salvar
       </button>
     </form>
   );

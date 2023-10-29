@@ -8,8 +8,7 @@ export default function Labs() {
   const route = useRouter();
   if (session.status === 'loading') {
     return <Loading />;
-  }
-  if (session.status === 'unauthenticated') {
+  } else if (session.status === 'unauthenticated') {
     route.push('/login');
   }
   return (
@@ -19,7 +18,7 @@ export default function Labs() {
           <div className='card'>
             <div className='card-body'>
               <h5 className='card-title'>Exames</h5>
-              <p className='card-text'>Ver exames</p>
+              <p className='card-text'>Ver lista de exames em aberto</p>
               <a href='/labs/para-fazer' className='btn btn-primary'>
                 Consultar exames para realizar
               </a>
@@ -31,7 +30,7 @@ export default function Labs() {
           <div className='card'>
             <div className='card-body'>
               <h5 className='card-title'>Ver exames</h5>
-              <p className='card-text'>Verificar exames</p>
+              <p className='card-text'>Verificar lista de exames concluidos</p>
               <a href='/labs/concluidos' className='btn btn-primary'>
                 Consultar exames realizados
               </a>

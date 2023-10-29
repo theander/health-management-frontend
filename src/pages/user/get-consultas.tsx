@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-import jwt_decode from 'jwt-decode';
+import React from 'react';
 import { getSession, useSession } from 'next-auth/react';
 import axios from 'axios';
 import {
@@ -8,16 +7,18 @@ import {
   USER_API_BASE_URL,
 } from '../../../components/const/url-constants';
 import Loading from '../../../components/general/loading';
+import { useRouter } from 'next/router';
+import jwt_decode from 'jwt-decode';
 
-export default function GetConsultas(props) {
+export default function GetConsultas(props: any) {
   const session = useSession();
+  const route = useRouter();
 
   if (session.status === 'loading') {
-    <Loading />;
+    return <Loading />;
   } else if (session.status === 'unauthenticated') {
-    <p>Não autenticado</p>;
+    route.push('/login');
   }
-
   return (
     <div className='container'>
       <div className='row'>
@@ -65,6 +66,7 @@ export default function GetConsultas(props) {
 
 export async function getServerSideProps(ctx: any) {
   const session = await getSession(ctx);
+  let usuario = '';
   if (!session) {
     return {
       props: {
@@ -73,15 +75,23 @@ export async function getServerSideProps(ctx: any) {
     };
   }
 
-  const { user } = session;
-  const resp = await fetch(
-    `${USER_API_BASE_URL}/api/user-by-email/${user?.email}`
-  );
-
-  const { username } = await resp.json();
+  const { accessToken } = { accessToken: '', ...session };
+  if (accessToken.length > 25) {
+    let { sub: username, roles: userRoles } = jwt_decode(accessToken || '') as {
+      roles: string[];
+      sub: string;
+    };
+    usuario = username;
+  } else {
+    const resp = await fetch(
+      `${USER_API_BASE_URL}/api/user-by-email/${session?.user?.email}`
+    );
+    const { username } = await resp.json();
+    usuario = username;
+  }
 
   const res = await axios.get(
-    `${MEDICAL_API_BASE_URL}/api/consulta?username=${username}&status=OPEN`
+    `${MEDICAL_API_BASE_URL}/api/consulta?username=${usuario}&status=OPEN`
   );
   const consultasAbertas = await res.data;
   return {

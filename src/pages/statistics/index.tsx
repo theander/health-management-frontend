@@ -12,8 +12,13 @@ import {
   USER_API_BASE_URL,
 } from '../../../components/const/url-constants';
 import React, { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import Loading from '../../../components/general/loading';
 
 export default function Statisticas(props: any) {
+  const session = useSession();
+  const route = useRouter();
   const [showChild, setShowChild] = useState(false);
   useEffect(() => {
     setShowChild(true);
@@ -26,6 +31,11 @@ export default function Statisticas(props: any) {
   if (typeof window === 'undefined') {
     return <></>;
   } else {
+    if (session.status === 'loading') {
+      return <Loading />;
+    } else if (session.status === 'unauthenticated') {
+      route.push('/login');
+    }
     return (
       <div className='container'>
         <div className='row'>
@@ -87,26 +97,6 @@ export default function Statisticas(props: any) {
             </LineChart>
           </div>
         </div>
-
-        <div className='row'>
-          <div className='d-flex justify-content-center'>
-            <h5 className='p-2'>Receitas por mês</h5>
-          </div>
-          <div className='d-flex justify-content-center'>
-            <LineChart
-              width={1200}
-              height={300}
-              data={props.medData}
-              margin={{ top: 10, right: 0, bottom: 10, left: 0 }}
-            >
-              <Line type='monotone' dataKey='uv' stroke='#8884d8' />
-              <CartesianGrid stroke='#ccc' strokeDasharray='5 5' />
-              <XAxis dataKey='name' />
-              <YAxis />
-              <Tooltip />
-            </LineChart>
-          </div>
-        </div>
       </div>
     );
   }
@@ -115,30 +105,24 @@ export default function Statisticas(props: any) {
 export async function getServerSideProps() {
   const respUser = fetch(`${USER_API_BASE_URL}/api/users/count`);
   const respLab = fetch(`${LABS_API_BASE_URL}/api/lab/count`);
-  const respMed = fetch(`${MEDICAL_API_BASE_URL}/api/list/count`);
   const respCon = fetch(`${MEDICAL_API_BASE_URL}/api/consulta/count`);
-  const [resUser, resLab, resMed, resCon] = await Promise.all([
+  const [resUser, resLab, resCon] = await Promise.all([
     respUser,
     respLab,
-    respMed,
     respCon,
   ]);
+
   const dataUser = await resUser.json();
   let userData: ReadonlyArray<{ name: string; uv: any }> = [];
 
   const dataLab = await resLab.json();
   let labData: ReadonlyArray<{ name: string; uv: any }> = [];
-  const dataMed = await resMed.json();
 
-  let medData: ReadonlyArray<{ name: string; uv: any }> = [];
   const dataCon = await resCon.json();
   let conData: ReadonlyArray<{ name: string; uv: any }> = [];
 
   for (const [key, value] of Object.entries(dataCon)) {
     conData = [...conData, { name: mapMonth(Number(key)), uv: value }];
-  }
-  for (const [key, value] of Object.entries(dataMed)) {
-    medData = [...medData, { name: mapMonth(Number(key)), uv: value }];
   }
 
   for (const [key, value] of Object.entries(dataUser)) {
@@ -152,7 +136,6 @@ export async function getServerSideProps() {
     props: {
       userData,
       labData,
-      medData,
       conData,
     },
   };

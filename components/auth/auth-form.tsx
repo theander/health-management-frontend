@@ -79,6 +79,7 @@ export default function AuthForm() {
             </button>
           </div>
           <p>{authorizationError && 'Usuário ou senha inválida'}</p>
+
           <LoginBtn />
           <p className='mt-5 mb-3 text-muted  p-1'>
             &copy; 2022–{new Date().getFullYear()}

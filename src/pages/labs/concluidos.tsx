@@ -5,18 +5,18 @@ import Link from 'next/link';
 import { LABS_API_BASE_URL } from '../../../components/const/url-constants';
 import { useSession } from 'next-auth/react';
 import Loading from '../../../components/general/loading';
+import { useRouter } from 'next/router';
 
-export default function Concluidos() {
+export default function Concluidos({ exames }) {
   const session = useSession();
-  const [exams, setExams] = useState([] as Exam[]);
-  useEffect(() => {
-    axios
-      .get(`${LABS_API_BASE_URL}/api/lab?status=CLOSE`)
-      .then((resp) => setExams(resp.data));
-  }, [0]);
+  const route = useRouter();
+
   if (session.status === 'loading') {
     return <Loading />;
+  } else if (session.status === 'unauthenticated') {
+    route.push('/login');
   }
+
   return (
     <div className='container'>
       <nav>
@@ -41,7 +41,7 @@ export default function Concluidos() {
           </tr>
         </thead>
         <tbody>
-          {exams.map((exam, index) => (
+          {exames.map((exam: any, index: number) => (
             <tr key={index}>
               <td>{exam.id}</td>
               <td>{exam.name}</td>
@@ -54,4 +54,14 @@ export default function Concluidos() {
       </table>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  const resp = await axios.get(`${LABS_API_BASE_URL}/api/lab?status=CLOSE`);
+  const exames = await resp.data;
+  return {
+    props: {
+      exames,
+    },
+  };
 }

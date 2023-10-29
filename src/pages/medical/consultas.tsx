@@ -5,6 +5,7 @@ import jwt_decode from 'jwt-decode';
 import Link from 'next/link';
 import { MEDICAL_API_BASE_URL } from '../../../components/const/url-constants';
 import Loading from '../../../components/general/loading';
+import { useRouter } from 'next/router';
 
 export default function Consultas() {
   async function handleConcluir(event: any) {
@@ -17,6 +18,7 @@ export default function Consultas() {
     return res.data;
   }
   const session = useSession();
+  const router = useRouter();
   const [result, setResult] = useState([]);
   let user = '';
 
@@ -27,8 +29,8 @@ export default function Consultas() {
     const { accessToken } = { accessToken: '', ...session?.data };
     let { sub: username } = jwt_decode(accessToken || '') as { sub: string };
     user = username;
-  } else {
-    <p>Não autenticado</p>;
+  } else if (session.status === 'unauthenticated') {
+    router.push('/loging');
   }
   useEffect(() => {
     session.status === 'authenticated'

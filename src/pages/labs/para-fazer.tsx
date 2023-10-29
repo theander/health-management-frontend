@@ -5,17 +5,22 @@ import Link from 'next/link';
 import { LABS_API_BASE_URL } from '../../../components/const/url-constants';
 import { useSession } from 'next-auth/react';
 import Loading from '../../../components/general/loading';
+import { useRouter } from 'next/router';
 
 export default function ParaFazer() {
   const session = useSession();
+  const route = useRouter();
   const [exams, setExams] = useState([] as Exam[]);
   useEffect(() => {
     axios
       .get(`${LABS_API_BASE_URL}/api/lab?status=OPEN`)
       .then((resp) => setExams(resp.data));
   }, [0]);
+
   if (session.status === 'loading') {
     return <Loading />;
+  } else if (session.status === 'unauthenticated') {
+    route.push('/login');
   }
   return (
     <div className='container'>

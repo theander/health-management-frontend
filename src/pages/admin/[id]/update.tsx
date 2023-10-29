@@ -10,6 +10,11 @@ export default function Update({ data }) {
   const session = useSession();
   const UPDATE_USER_URL = `${USER_API_BASE_URL}/api/user/update`;
   const [user, setUser] = useState(data);
+  if (session.status === 'loading') {
+    return <Loading />;
+  } else if (session.status === 'unauthenticated') {
+    router.push('/login');
+  }
 
   async function handleUpdate(event: any) {
     event.preventDefault();

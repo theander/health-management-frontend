@@ -1,43 +1,19 @@
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { Exam, LabType } from '../../../types';
 import { useSession } from 'next-auth/react';
-import jwt_decode from 'jwt-decode';
 import { LABS_API_BASE_URL } from '../../../../components/const/url-constants';
 import Loading from '../../../../components/general/loading';
 
-export default function Exames() {
+export default function Exames({ labs }) {
   const route = useRouter();
   const createExamRoute = `/medical/${route.query.id}/create-exame`;
-
-  async function getLab(name: string) {
-    const resp = await axios.get(
-      `${LABS_API_BASE_URL}/api/lab?status=OPEN&name=${name}`
-    );
-    return resp.data;
-  }
-
-  const [labs, setLabs] = useState([] as LabType[]);
   const session = useSession();
 
-  let user = '';
   if (session.status === 'loading') {
     return <Loading />;
   }
-  if (session.status === 'authenticated') {
-    const { accessToken } = { accessToken: '', ...session?.data };
-    let { sub: username } = jwt_decode(accessToken || '') as { sub: string };
-    user = username;
-  } else {
-    <p>Não autenticado</p>;
-  }
-  useEffect(() => {
-    session.status === 'authenticated'
-      ? getLab(user).then((res) => setLabs(res))
-      : null;
-  }, [user]);
 
   return (
     <div>
@@ -74,4 +50,16 @@ export default function Exames() {
       </table>
     </div>
   );
+}
+export async function getServerSideProps(ctx: { query: { id: any } }) {
+  const { id } = ctx.query;
+  const resp = await axios.get(
+    `${LABS_API_BASE_URL}/api/lab?status=OPEN&name=${id}`
+  );
+  const labs = await resp.data;
+  return {
+    props: {
+      labs,
+    },
+  };
 }

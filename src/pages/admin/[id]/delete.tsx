@@ -15,9 +15,11 @@ export default function Delete() {
     const res = await axios
       .delete(`${USER_API_BASE_URL}/api/users/${id}`)
       .then((res) => {
+        console.log(res);
         setMensage('User deleted');
       })
       .catch((error) => {
+        console.log(error);
         if (error.response.status === 404) {
           setMensage(`User with id=${id} not found`);
         } else {
