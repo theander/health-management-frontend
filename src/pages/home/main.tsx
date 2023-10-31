@@ -1,4 +1,4 @@
-import { getSession, useSession } from 'next-auth/react';
+import { getSession, signOut, useSession } from 'next-auth/react';
 import { USER_API_BASE_URL } from '../../../components/const/url-constants';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -29,9 +29,13 @@ export default function Main(props: any) {
   } else {
     if (session.status === 'loading') {
       return <Loading />;
-    } else if (session.status !== 'authenticated') {
+    } else if (session.status === 'unauthenticated') {
       router.push('/login');
     } else {
+      if ([404].includes(props.status) || !props?.result?.username) {
+        router.push('/home/not-registered');
+        return <></>;
+      }
       const { accessToken } = { accessToken: '', ...session?.data };
       if (accessToken.length > 25) {
         let { sub: username, roles: userRoles } = jwt_decode(
@@ -75,18 +79,26 @@ export async function getServerSideProps(ctx: any) {
   const resp = await fetch(
     `${USER_API_BASE_URL}/api/user-by-email/${user?.email}`
   );
+
   if (resp.status === 200) {
     const result = await resp.json();
-
     return {
       props: {
         result,
+        status: 200,
+      },
+    };
+  } else if (resp.status === 404) {
+    return {
+      props: {
+        status: 404,
       },
     };
   } else {
     return {
       props: {
         user,
+        status: 200,
       },
     };
   }
