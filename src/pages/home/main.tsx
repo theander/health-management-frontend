@@ -33,7 +33,7 @@ export default function Main(props: any) {
       router.push('/login');
     } else {
       if ([404].includes(props.status) || !props?.result?.username) {
-        router.push('/home/not-registered');
+        router.push('/admin/create');
         return <></>;
       }
       const { accessToken } = { accessToken: '', ...session?.data };

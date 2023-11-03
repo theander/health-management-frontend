@@ -14,6 +14,7 @@ export default function Consultar(props: any) {
   } else if (session.status === 'unauthenticated') {
     route.push('/login');
   }
+  console.log(props);
   return (
     <div>
       <div className='container'>
@@ -66,6 +67,10 @@ export async function getServerSideProps() {
   const res = await fetch(
     `${USER_API_BASE_URL}/api/users-by-role/ROLE_MEDICAL`
   );
+  if (res.status !== 200) {
+    return { props: { data: [] } };
+  }
+
   const data = await res.json();
   // Pass data to the page via props
   return { props: { data } };

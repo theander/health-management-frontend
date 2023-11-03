@@ -5,16 +5,20 @@ import Loading from '../../../components/general/loading';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import ClientesPdf from '../../../components/reports/clients-pdf';
+
 export default function User(props: any) {
   const session = useSession();
   const router = useRouter();
+  let currentRole;
+  if (typeof window !== 'undefined') {
+    currentRole = localStorage.getItem('role');
+  }
   if (session.status === 'loading') {
     return <Loading />;
-  }
-  if (props?.status) {
-    return <h2>Você deve estar cadastrado!!! </h2>;
-  }
-  if (session.status === 'unauthenticated') {
+  } else if (
+    session.status === 'unauthenticated' ||
+    (currentRole !== 'ROLE_ADMIN' && currentRole !== null)
+  ) {
     router.push('/login');
   }
 
@@ -26,15 +30,15 @@ export default function User(props: any) {
       <nav>
         <ul className='nav justify-content-center gap-3'>
           <li className='nav-item'>
-            <button className='btn btn-outline-light' aria-current='page'>
+            <button className='btn btn-outline-primary' aria-current='page'>
               <Link className='text-decoration-none' href='/admin/create'>
                 Adicionar usuário
               </Link>
             </button>
           </li>
-          <li>
+          <li className='nav-item justify-content-end'>
             <button
-              className='btn btn-outline-light'
+              className='btn btn-outline-primary'
               aria-current='page'
               onClick={generatePdf}
             >
@@ -46,13 +50,20 @@ export default function User(props: any) {
       <div id='containerTableId' className='container'>
         <table className='table'>
           <thead>
-            <tr>
-              <h4>Lista de usuários</h4>
+            <tr className='border-dark'>
+              <td>
+                <h4>Lista de usuários</h4>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr>
               <td>Nome</td>
               <td>Username</td>
               <td>Email</td>
+              <td>Role</td>
               <td>Manage</td>
             </tr>
           </thead>
@@ -62,6 +73,7 @@ export default function User(props: any) {
                 <td>{user.name}</td>
                 <td>{user.username}</td>
                 <td>{user.email}</td>
+                <td>{user?.roles[0]?.name}</td>
                 <td>
                   <Link href={`/admin/${user.id}/delete`}>
                     <svg

@@ -83,7 +83,10 @@ export default function Medical(props: any) {
           </tbody>
         </table>
       ) : (
-        <h2>Sem Consultas por enquanto</h2>
+        <div className='container justify-content-center mt-2'>
+          {' '}
+          <h2>Sem Consultas por enquanto</h2>
+        </div>
       )}
     </div>
   );

@@ -44,7 +44,7 @@ export default function Statisticas(props: any) {
           </div>
           <div className='d-flex justify-content-center p-2'>
             <LineChart
-              width={1200}
+              width={1300}
               height={300}
               data={props.userData}
               margin={{ top: 10, right: 0, bottom: 10, left: 0 }}
@@ -64,7 +64,7 @@ export default function Statisticas(props: any) {
           </div>
           <div className='d-flex justify-content-center'>
             <LineChart
-              width={1200}
+              width={1300}
               height={300}
               data={props.labData}
               margin={{ top: 10, right: 0, bottom: 10, left: 0 }}
@@ -84,7 +84,7 @@ export default function Statisticas(props: any) {
           </div>
           <div className='d-flex justify-content-center'>
             <LineChart
-              width={1200}
+              width={1300}
               height={300}
               data={props.conData}
               margin={{ top: 10, right: 0, bottom: 10, left: 0 }}
@@ -124,13 +124,15 @@ export async function getServerSideProps() {
   for (const [key, value] of Object.entries(dataCon)) {
     conData = [...conData, { name: mapMonth(Number(key)), uv: value }];
   }
-
   for (const [key, value] of Object.entries(dataUser)) {
     userData = [...userData, { name: mapMonth(Number(key)), uv: value }];
   }
   for (const [key, value] of Object.entries(dataLab)) {
     labData = [...labData, { name: mapMonth(Number(key)), uv: value }];
   }
+  console.log(conData);
+  console.log(userData);
+  console.log(labData);
 
   return {
     props: {

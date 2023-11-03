@@ -10,7 +10,10 @@ export default function Create() {
   const session = useSession();
   const CREATE_USER_URL = `${USER_API_BASE_URL}/api/user/save`;
   const ADD_ROLE_TO_USER_URL = `${USER_API_BASE_URL}/api/role/addtouser`;
-
+  let currentRole;
+  if (typeof window !== 'undefined') {
+    currentRole = localStorage.getItem('role');
+  }
   async function handleCreate(event: any) {
     event.preventDefault();
     const resp = await axios.post(CREATE_USER_URL, {
@@ -33,8 +36,14 @@ export default function Create() {
     }
   }
 
+  console.log(currentRole !== 'ROLE_ADMIN' && currentRole !== null);
   if (session.status === 'loading') {
     return <Loading />;
+  } else if (
+    session.status === 'unauthenticated' ||
+    (currentRole !== 'ROLE_ADMIN' && currentRole !== null)
+  ) {
+    router.push('/login');
   }
 
   return (
@@ -57,21 +66,34 @@ export default function Create() {
             type='text'
             className='form-control'
             id='floatingInput'
-            placeholder='João da silva'
+            placeholder={'João da silva'}
             name='username'
             required
           />
           <label htmlFor='floatingInput'>Username</label>
         </div>
         <div className='form-floating p-1'>
-          <input
-            type='email'
-            className='form-control'
-            id='floatingInput'
-            placeholder='joao@gmail.com'
-            name='email'
-            required
-          />
+          {currentRole === null ? (
+            <input
+              type='email'
+              className='form-control'
+              id='floatingInput'
+              placeholder='joao@gmail.com'
+              name='email'
+              required
+              disabled
+              value={session.data?.user?.email || ''}
+            />
+          ) : (
+            <input
+              type='email'
+              className='form-control'
+              id='floatingInput'
+              placeholder='joao@gmail.com'
+              name='email'
+              required
+            />
+          )}
           <label htmlFor='floatingInput'>E-mail</label>
         </div>
         <div className='form-floating p-1'>
@@ -80,6 +102,7 @@ export default function Create() {
             aria-label='Default select example'
             name={'role'}
             required
+            disabled={currentRole === null}
           >
             <option value='ROLE_USER'>User</option>
             <option value='ROLE_MEDICAL'>Medical</option>
