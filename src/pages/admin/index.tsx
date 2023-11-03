@@ -4,7 +4,7 @@ import { USER_API_BASE_URL } from '../../../components/const/url-constants';
 import Loading from '../../../components/general/loading';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-
+import ClientesPdf from '../../../components/reports/clients-pdf';
 export default function User(props: any) {
   const session = useSession();
   const router = useRouter();
@@ -17,6 +17,10 @@ export default function User(props: any) {
   if (session.status === 'unauthenticated') {
     router.push('/login');
   }
+
+  const generatePdf = async () => {
+    ClientesPdf(props.data);
+  };
   return (
     <div>
       <nav>
@@ -28,16 +32,28 @@ export default function User(props: any) {
               </Link>
             </button>
           </li>
+          <li>
+            <button
+              className='btn btn-outline-light'
+              aria-current='page'
+              onClick={generatePdf}
+            >
+              Gerar PDF
+            </button>
+          </li>
         </ul>
       </nav>
-      <div className='container'>
+      <div id='containerTableId' className='container'>
         <table className='table'>
           <thead>
+            <tr>
+              <h4>Lista de usuários</h4>
+            </tr>
             <tr>
               <td>Nome</td>
               <td>Username</td>
               <td>Email</td>
-              <td>manage</td>
+              <td>Manage</td>
             </tr>
           </thead>
           <tbody>

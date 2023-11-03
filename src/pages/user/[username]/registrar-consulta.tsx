@@ -15,7 +15,7 @@ export default function RegistrarConsulta(props: any) {
               <td>Nome</td>
               <td>Username</td>
               <td>Role</td>
-              <td>manage</td>
+              <td>Manage</td>
             </tr>
           </thead>
           <tbody>
