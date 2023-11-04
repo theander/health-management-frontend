@@ -47,7 +47,7 @@ export default function User(props: any) {
           </li>
         </ul>
       </nav>
-      <div id='containerTableId' className='container'>
+      <div className='container'>
         <table className='table'>
           <thead>
             <tr className='border-dark'>
