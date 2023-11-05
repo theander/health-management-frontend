@@ -23,7 +23,9 @@ export default function Main(props: any) {
   if (role) {
     router.push('/home');
   }
-
+  async function updateSession(role: string) {
+    await session.update({ ...session, role: role });
+  }
   if (typeof window === 'undefined') {
     return <></>;
   } else {
@@ -48,7 +50,8 @@ export default function Main(props: any) {
         roles.length < 2 && roles
           ? setRoles((prevState) => [...prevState, userRoles[0]])
           : null;
-        localStorage.setItem('role', userRoles[0]);
+
+        updateSession(userRoles[0]);
         localStorage.setItem('username', username);
         router.push('/home');
       } else {
@@ -56,8 +59,8 @@ export default function Main(props: any) {
         roles.length < 2 && roles
           ? setRoles((prevState) => [...prevState, userRole])
           : null;
+        updateSession(userRole);
         localStorage.setItem('username', props.result.username);
-        localStorage.setItem('role', userRole);
         router.push('/home');
       }
     }
@@ -76,6 +79,7 @@ export async function getServerSideProps(ctx: any) {
     };
   }
   const { user } = session;
+
   const resp = await fetch(
     `${USER_API_BASE_URL}/api/user-by-email/${user?.email}`
   );
@@ -91,7 +95,7 @@ export async function getServerSideProps(ctx: any) {
   } else if (resp.status === 404) {
     return {
       props: {
-        status: 404,
+        status: resp.status,
       },
     };
   } else {

@@ -20,12 +20,12 @@ export default function AuthForm() {
     event.preventDefault();
     const enteredEmail = event.target.email.value;
     const enteredPassword = event.target.password.value;
-
     const signin = await signIn('credentials', {
       redirect: false,
       username: enteredEmail,
       password: enteredPassword,
     });
+
     if (!signin?.error) {
       await route.push('/home');
     }
@@ -40,17 +40,13 @@ export default function AuthForm() {
 
   return (
     <>
-      <div className='form-signin w-25 m-auto'>
+      <div className='form-signin w-25 m-auto mt-2'>
+        {authorizationError && (
+          <div className='alert alert-danger' role='alert'>
+            Usuário ou senha inválida
+          </div>
+        )}
         <form onSubmit={submitLogin}>
-          <img
-            className='mb-4'
-            src='images/login.jpg'
-            alt=''
-            width='72'
-            height='57'
-          ></img>
-          <h1 className='h3 mb-3 fw-normal p-1'>Sign in</h1>
-
           <div className='form-floating p-1'>
             <input
               type='text'
@@ -78,8 +74,6 @@ export default function AuthForm() {
               Sign in
             </button>
           </div>
-          <p>{authorizationError && 'Usuário ou senha inválida'}</p>
-
           <LoginBtn />
           <p className='mt-5 mb-3 text-muted  p-1'>
             &copy; 2022–{new Date().getFullYear()}

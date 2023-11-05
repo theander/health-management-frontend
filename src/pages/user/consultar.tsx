@@ -14,7 +14,6 @@ export default function Consultar(props: any) {
   } else if (session.status === 'unauthenticated') {
     route.push('/login');
   }
-  console.log(props);
   return (
     <div>
       <div className='container'>
@@ -27,6 +26,7 @@ export default function Consultar(props: any) {
               <tr>
                 <td>Nome</td>
                 <td>Username</td>
+                <td>Role</td>
                 <td>Marcar</td>
               </tr>
             </thead>
@@ -35,6 +35,7 @@ export default function Consultar(props: any) {
                 <tr key={user.id}>
                   <td>{user.name}</td>
                   <td>{user.username}</td>
+                  <td>{user.roles[0].name}</td>
                   <td>
                     <Link href={`/user/${user.username}/consultar`}>
                       <svg

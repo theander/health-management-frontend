@@ -49,7 +49,7 @@ export default function GetConsultas(props: any) {
             </tr>
           </thead>
           <tbody>
-            {props.consultasAbertas.map((consulta: any) => (
+            {props.consultasAbertas?.map((consulta: any) => (
               <tr key={consulta.id}>
                 <td>{consulta.username}</td>
                 <td>{consulta.medico}</td>

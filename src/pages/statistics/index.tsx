@@ -5,6 +5,9 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+  BarChart,
+  Legend,
+  Bar,
 } from 'recharts';
 import {
   LABS_API_BASE_URL,
@@ -40,7 +43,7 @@ export default function Statisticas(props: any) {
       <div className='container'>
         <div className='row'>
           <div className='d-flex justify-content-center'>
-            <h5 className='p-2'>Usuários por mês</h5>
+            <h5 className='p-2'>Usuários cadastrados por mês</h5>
           </div>
           <div className='d-flex justify-content-center p-2'>
             <LineChart
@@ -97,6 +100,51 @@ export default function Statisticas(props: any) {
             </LineChart>
           </div>
         </div>
+
+        <div className='row'>
+          <div className='d-flex justify-content-center'>
+            <h5 className='p-2'>Exames por usuários por mês</h5>
+          </div>
+          <div className='d-flex justify-content-center'>
+            <BarChart
+              width={1300}
+              height={300}
+              data={props.labByUserData}
+              margin={{ top: 10, right: 0, left: 10, bottom: 0 }}
+            >
+              <CartesianGrid strokeDasharray='3 3' />
+              <XAxis dataKey='name' />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey='uv' fill='#247BA7' />
+            </BarChart>
+          </div>
+        </div>
+
+        <div className='row'>
+          <div className='d-flex justify-content-center'>
+            <h5 className='p-2'>Consultas por usuários por mês</h5>
+          </div>
+          <div className='d-flex justify-content-center'>
+            <BarChart
+              width={1300}
+              height={300}
+              data={props.conByUserData}
+              margin={{
+                top: 10,
+                right: 0,
+                left: 10,
+                bottom: 0,
+              }}
+            >
+              <CartesianGrid strokeDasharray='3 3' />
+              <XAxis dataKey='name' />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey='uv' fill='#82ca9d' />
+            </BarChart>
+          </div>
+        </div>
       </div>
     );
   }
@@ -112,33 +160,58 @@ export async function getServerSideProps() {
     respCon,
   ]);
 
+  let userData: ReadonlyArray<{ name: string; uv: number }> = [];
+  let labData: ReadonlyArray<{ name: string; uv: number }> = [];
+  let conData: ReadonlyArray<{ name: string; uv: number }> = [];
+  let conByUserData: ReadonlyArray<{ name: string; uv: number }> = [];
+  let labByUserData: ReadonlyArray<{ name: string; uv: number }> = [];
+
   const dataUser = await resUser.json();
-  let userData: ReadonlyArray<{ name: string; uv: any }> = [];
-
   const dataLab = await resLab.json();
-  let labData: ReadonlyArray<{ name: string; uv: any }> = [];
-
   const dataCon = await resCon.json();
-  let conData: ReadonlyArray<{ name: string; uv: any }> = [];
 
   for (const [key, value] of Object.entries(dataCon)) {
-    conData = [...conData, { name: mapMonth(Number(key)), uv: value }];
+    conData = [...conData, { name: mapMonth(Number(key)), uv: Number(value) }];
   }
   for (const [key, value] of Object.entries(dataUser)) {
-    userData = [...userData, { name: mapMonth(Number(key)), uv: value }];
+    userData = [
+      ...userData,
+      { name: mapMonth(Number(key)), uv: Number(value) },
+    ];
   }
   for (const [key, value] of Object.entries(dataLab)) {
-    labData = [...labData, { name: mapMonth(Number(key)), uv: value }];
+    labData = [...labData, { name: mapMonth(Number(key)), uv: Number(value) }];
   }
-  console.log(conData);
-  console.log(userData);
-  console.log(labData);
+
+  labByUserData = Object.entries(userData).map((value, index) => {
+    const exames = labData[index];
+    const usuarios = value[1];
+    const res = isNaN(exames.uv / usuarios.uv) ? 0 : exames.uv / usuarios.uv;
+    return {
+      name: usuarios.name,
+      uv: res,
+    };
+  });
+
+  conByUserData = Object.entries(userData).map((value, index) => {
+    const consulta = conData[index];
+    const usuarios = value[1];
+    const res = isNaN(consulta.uv / usuarios.uv)
+      ? 0
+      : consulta.uv / usuarios.uv;
+    return {
+      name: usuarios.name,
+      uv: res,
+    };
+  });
 
   return {
     props: {
       userData,
       labData,
       conData,
+      conByUserData,
+      labByUserData,
     },
   };
 }

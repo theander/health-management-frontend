@@ -5,9 +5,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { USER_API_BASE_URL } from '../../../../components/const/url-constants';
 import axios from 'axios';
-import { log } from 'util';
-import { mockProviders } from 'next-auth/client/__tests__/helpers/mocks';
-import credentials = mockProviders.credentials;
 
 export default NextAuth({
   session: {
@@ -20,12 +17,6 @@ export default NextAuth({
     }),
     CredentialsProvider({
       async authorize(credentials, req) {
-        // if (!credentials.password) {
-        //   const credi = await axios.get(
-        //     `${USER_API_BASE_URL}/api/user-by-email/${credentials.username}`
-        //   );
-        //   credentials = await credi.data;
-        // }
         const resp = await axios.post(
           `${USER_API_BASE_URL}/api/login`,
           {
@@ -37,27 +28,30 @@ export default NextAuth({
             },
           }
         );
-
         const user = await resp.data;
         if (!user) {
           throw new Error('No admin found!');
         }
-        // const isValid = await verifyPassword(
-        //   credentials.password,
-        //   admin.password
-        // );
-        // if (!isValid) {
-        //   throw new Error('could not log in');
-        // }
 
+        const resp1 = await axios.get(`${USER_API_BASE_URL}/api/users`);
+        const usrs = await resp1.data;
+        const { email, roles } = usrs.find((val: any) =>
+          val.username.includes(credentials?.username)
+        );
+        const { access_token } = user;
         return {
-          id: user.access_token,
+          id: access_token,
+          email: email,
         };
       },
     }),
   ],
   callbacks: {
-    jwt: async ({ token, user, account, isNewUser }) => {
+    jwt: async ({ token, user, account, trigger, session }) => {
+      if (trigger === 'update') {
+        return { ...token, ...session };
+      }
+
       if (token.sub) {
         return token;
       } else {
@@ -69,7 +63,12 @@ export default NextAuth({
       if (!token.sub) {
         throw new Error('Invalid session!');
       }
-      return { ...session, accessToken: token.sub };
+      return {
+        ...session,
+        accessToken: token.sub,
+        user: { email: token.email },
+        role: token.role,
+      };
     },
   },
   pages: {
@@ -91,5 +90,8 @@ declare module '@auth/core/jwt' {
     refresh_token: string;
     role: string;
     error?: 'RefreshAccessTokenError';
+    user: {
+      email: string;
+    };
   }
 }

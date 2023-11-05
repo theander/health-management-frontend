@@ -4,14 +4,13 @@ import Loading from '../../../components/general/loading';
 import React from 'react';
 
 export default function UserHome() {
-  const session = useSession();
+  const { data: session, status } = useSession();
   const route = useRouter();
-  if (session.status === 'loading') {
+  if (status === 'loading') {
     return <Loading />;
-  } else if (session.status === 'unauthenticated') {
+  } else if (status === 'unauthenticated') {
     route.push('/login');
   }
-
   return (
     <div className='container'>
       <div className='row'>

@@ -22,7 +22,7 @@ export default function Exams(props) {
 
   return (
     <div className='container'>
-      {props.exames.length > 0 ? (
+      {props.exames?.length > 0 ? (
         <table className='table'>
           <thead>
             <tr>

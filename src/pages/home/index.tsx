@@ -5,9 +5,9 @@ import Loading from '../../../components/general/loading';
 
 export default function Home(props: any) {
   const [showChild, setShowChild] = useState(false);
-  const session = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
-  let role;
+  const role = session?.role;
   useEffect(() => {
     setShowChild(true);
   }, []);
@@ -17,12 +17,11 @@ export default function Home(props: any) {
   if (typeof window === 'undefined') {
     return <></>;
   } else {
-    if (session.status === 'loading') {
+    if (status === 'loading') {
       return <Loading />;
-    } else if (session.status !== 'authenticated') {
+    } else if (status !== 'authenticated') {
       router.push('/login');
     }
-    role = localStorage.getItem('role');
   }
   return (
     <div className='container'>

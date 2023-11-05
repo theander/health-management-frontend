@@ -7,16 +7,14 @@ import { useRouter } from 'next/router';
 import ClientesPdf from '../../../components/reports/clients-pdf';
 
 export default function User(props: any) {
-  const session = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
-  let currentRole;
-  if (typeof window !== 'undefined') {
-    currentRole = localStorage.getItem('role');
-  }
-  if (session.status === 'loading') {
+  let currentRole = session?.role;
+
+  if (status === 'loading') {
     return <Loading />;
   } else if (
-    session.status === 'unauthenticated' ||
+    status === 'unauthenticated' ||
     (currentRole !== 'ROLE_ADMIN' && currentRole !== null)
   ) {
     router.push('/login');

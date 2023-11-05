@@ -16,7 +16,6 @@ export default function LoginBtn() {
         className='w-100 btn btn-lg btn-primary'
         onClick={() => {
           signIn('google');
-          localStorage.setItem('sign', 'google');
           router.push('/home');
         }}
       >

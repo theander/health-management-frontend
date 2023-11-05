@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useRef } from 'react';
 import axios from 'axios';
 import { MEDICAL_API_BASE_URL } from '../../../../components/const/url-constants';
+import Loading from '../../../../components/general/loading';
 
 export type RegistrarConsulta = {
   nome: string;
@@ -15,6 +16,9 @@ export default function Consultar(props: any) {
   const session = useSession();
   let user;
   let medico = route.query.username;
+  if (session.status === 'loading') {
+    return <Loading />;
+  }
   if (session.status === 'authenticated') {
     const { accessToken } = { accessToken: '', ...session?.data };
     let { sub: username } = jwt_decode(accessToken || '') as { sub: string };

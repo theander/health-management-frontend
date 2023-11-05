@@ -7,13 +7,11 @@ import { useSession } from 'next-auth/react';
 
 export default function Create() {
   const router = useRouter();
-  const session = useSession();
+  const { data: session, status } = useSession();
   const CREATE_USER_URL = `${USER_API_BASE_URL}/api/user/save`;
   const ADD_ROLE_TO_USER_URL = `${USER_API_BASE_URL}/api/role/addtouser`;
-  let currentRole;
-  if (typeof window !== 'undefined') {
-    currentRole = localStorage.getItem('role');
-  }
+  let currentRole = session?.role;
+
   async function handleCreate(event: any) {
     event.preventDefault();
     const resp = await axios.post(CREATE_USER_URL, {
@@ -36,16 +34,16 @@ export default function Create() {
     }
   }
 
-  console.log(currentRole !== 'ROLE_ADMIN' && currentRole !== null);
-  if (session.status === 'loading') {
+  const backCondition = status === 'unauthenticated';
+  // ||
+  // currentRole !== 'ROLE_ADMIN' ||
+  // currentRole !== null;
+  if (status === 'loading') {
     return <Loading />;
-  } else if (
-    session.status === 'unauthenticated' ||
-    (currentRole !== 'ROLE_ADMIN' && currentRole !== null)
-  ) {
+  } else if (backCondition) {
     router.push('/login');
   }
-
+  console.log(session);
   return (
     <div className='form-signin w-50 m-auto'>
       <form onSubmit={handleCreate}>
@@ -73,7 +71,7 @@ export default function Create() {
           <label htmlFor='floatingInput'>Username</label>
         </div>
         <div className='form-floating p-1'>
-          {currentRole === null ? (
+          {!currentRole ? (
             <input
               type='email'
               className='form-control'
@@ -82,7 +80,7 @@ export default function Create() {
               name='email'
               required
               disabled
-              value={session.data?.user?.email || ''}
+              value={session?.user?.email || ''}
             />
           ) : (
             <input
@@ -102,7 +100,7 @@ export default function Create() {
             aria-label='Default select example'
             name={'role'}
             required
-            disabled={currentRole === null}
+            disabled={!currentRole}
           >
             <option value='ROLE_USER'>User</option>
             <option value='ROLE_MEDICAL'>Medical</option>
